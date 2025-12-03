@@ -128,7 +128,7 @@ function FrontEndContact() {
                         <input
                             type="text"
                             className="form-control"
-                            value={contactData?.updatedAt && new Date(contactData?.updatedAt).toLocaleDateString()}
+                            value={contactData?.updatedAt && new Date(contactData?.updatedAt).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}
                             disabled
                         />
                     </div>

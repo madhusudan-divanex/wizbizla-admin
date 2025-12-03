@@ -109,8 +109,8 @@ function MemberShipPurchaseList() {
                                                             <td>{item?.membershipId?.name}</td>
                                                             {/* <td>{item?.price?.yearly}</td> */}
                                                             <td>{item?.membershipId?.type}</td>
-                                                            <td>{new Date(item?.startDate)?.toLocaleDateString()}</td>
-                                                            <td>{new Date(item?.endDate)?.toLocaleDateString()}</td>
+                                                            <td>{new Date(item?.startDate)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
+                                                            <td>{new Date(item?.endDate)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                             {/* <td >
                                                                 <div className="d-flex justify-content-start gap-2">
                                                                     <Link to={`/membership/view/${item._id}`} className="btn btn-sm btn-light"><FiEye /></Link>

@@ -96,7 +96,7 @@ const CustomersTable = () => {
                                                 <td>{cat?.lastName}</td>
                                                 <td>{cat?.email}</td>
                                                 <td>{cat?.contactNumber}</td>
-                                                <td>{new Date(cat?.createdAt).toLocaleDateString()}</td>
+                                                <td>{new Date(cat?.createdAt).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                 <td className="text-end">
                                                     <div className="d-flex justify-content-end gap-2">
                                                         <Link to={`/user/view/${cat._id}`} className="btn btn-sm btn-light"><FiEye /></Link>

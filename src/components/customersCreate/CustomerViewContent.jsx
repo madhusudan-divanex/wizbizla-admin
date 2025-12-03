@@ -239,7 +239,7 @@ const CustomerViewContent = () => {
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='name'>Account Create on </label>
-                                        <input id='name' type="text" className="form-control" value={new Date(userData?.createdAt)?.toLocaleDateString()} disabled />
+                                        <input id='name' type="text" className="form-control" value={new Date(userData?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='name'>Role</label>
@@ -473,13 +473,13 @@ const CustomerViewContent = () => {
                                                     <div className="col-sm-6">
                                                         <label htmlFor='issuedate'>License Issue Date</label>
                                                         <input type="text" className="form-control"
-                                                            value={license.licenseIssueDate ? new Date(license.licenseIssueDate).toLocaleDateString() : ''}
+                                                            value={license.licenseIssueDate ? new Date(license.licenseIssueDate).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : ''}
                                                             disabled />
                                                     </div>
                                                     <div className="col-sm-6">
                                                         <label htmlFor='expiry'>License Expiry Date</label>
                                                         <input type="text" className="form-control"
-                                                            value={license.licenseExpiryDate ? new Date(license.licenseExpiryDate).toLocaleDateString() : ''}
+                                                            value={license.licenseExpiryDate ? new Date(license.licenseExpiryDate).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : ''}
                                                             disabled />
                                                     </div>
                                                     <div className="col-sm-6">
@@ -776,13 +776,13 @@ const CustomerViewContent = () => {
                                     <div className="col-sm-6">
                                         <label htmlFor='issuedate'>License Issue Date</label>
                                         <input type="text" className="form-control"
-                                            value={license.licenseIssueDate ? new Date(license.licenseIssueDate).toLocaleDateString() : ''}
+                                            value={license.licenseIssueDate ? new Date(license.licenseIssueDate).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : ''}
                                             disabled />
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='expiry'>License Expiry Date</label>
                                         <input type="text" className="form-control"
-                                            value={license.licenseExpiryDate ? new Date(license.licenseExpiryDate).toLocaleDateString() : ''}
+                                            value={license.licenseExpiryDate ? new Date(license.licenseExpiryDate).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : ''}
                                             disabled />
                                     </div>
                                     <div className="col-sm-6">

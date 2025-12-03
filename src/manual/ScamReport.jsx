@@ -127,7 +127,7 @@ const ScamReport = () => {
                 </div>
                 <div className="col-sm-6">
                     <label htmlFor='name'>Date Reported to Wizbizla </label>
-                    <input id='name' type="text" className="form-control" value={new Date(scamData?.dateReported)?.toLocaleDateString()} disabled />
+                    <input id='name' type="text" className="form-control" value={new Date(scamData?.dateReported)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                 </div>
                 <div className="col-sm-6">
                     <label htmlFor='name'>Name</label>
@@ -143,7 +143,7 @@ const ScamReport = () => {
                 </div>
                 <div className="col-sm-6">
                     <label htmlFor='name'>Scam Submit on </label>
-                    <input id='name' type="text" className="form-control" value={new Date(scamData?.createdAt)?.toLocaleDateString()} disabled />
+                    <input id='name' type="text" className="form-control" value={new Date(scamData?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                 </div>
                 <div className="col-sm-6 d-flex flex-column">
                     <label htmlFor='name'>Image </label>

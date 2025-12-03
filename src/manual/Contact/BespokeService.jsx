@@ -139,7 +139,7 @@ const BespokeService = () => {
                         <input
                             type="text"
                             className="form-control"
-                            value={serviceData?.serviceDate ? new Date(serviceData?.serviceDate).toLocaleDateString() : "N/A"}
+                            value={serviceData?.serviceDate ? new Date(serviceData?.serviceDate).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : "N/A"}
                             disabled
                         />
                     </div>
@@ -169,7 +169,7 @@ const BespokeService = () => {
                         <input
                             type="text"
                             className="form-control"
-                            value={new Date(serviceData?.createdAt)?.toLocaleDateString()}
+                            value={new Date(serviceData?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}
                             disabled
                         />
                     </div>
@@ -233,7 +233,7 @@ const BespokeService = () => {
                                                         <td>{cat?.contactNumber}</td>
                                                         <td>{cat?.email}</td>
                                                         <td>{cat?.status}</td>
-                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString()}</td>
+                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
 
                                                         <td className='d-flex justify-content-between'>
                                                             <button onClick={() => setServiceData(cat)} className="btn btn-sm btn-light"><FiEye /></button>

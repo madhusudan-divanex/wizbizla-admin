@@ -5,30 +5,27 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import Pagination from '@/components/Services/Pagination';
-import { getApiData, getSecureApiData } from '../../Services/api';
-import base_url from '../../baseUrl';
+import { getApiData, getSecureApiData } from '../Services/api';
+import base_url from '../baseUrl';
 import Footer from '@/components/shared/Footer';
 import PageHeader from '@/components/shared/pageHeader/PageHeader';
 import { CSVLink } from 'react-csv';
 
-const GetInTouch = () => {
+const NewsLetter = () => {
     const [userList, setUserList] = useState([]);
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
-    const [search, setSearch] = useState('');
 
-    const fetchCustomers = async (pageNumber = page, searchQuery = search) => {
+    const fetchData = async (pageNumber = page) => {
         try {
             const result = await getSecureApiData(
-                `get-contact-query?page=${pageNumber}&type=get-in-touch`
+                `newsletter?page=${pageNumber}`
             );
 
-            if (result.status) {
-                setUserList(result.contactData || []);
-                setPage(result.currentPage);
-                setPages(result.totalPages);
-                setTotal(result.totalQuery);
+            if (result.success) {
+                setUserList(result.data || []);
+                setTotal(result.totalPages);
             }
         } catch (error) {
             console.log("Error fetching users:", error);
@@ -37,22 +34,17 @@ const GetInTouch = () => {
 
 
     useEffect(() => {
-        console.log("run")
-        setTimeout(() => {
-            fetchCustomers();
-        }, 500)
+        fetchData();
 
-    }, [page, search]);
+
+    }, [page]);
 
     const handlePageChange = (pageNumber) => {
         if (pageNumber !== page) {
             setPage(pageNumber);
         }
     };
-    const handleSearchChange = (e) => {
-        setSearch(e.target.value);
-    };
-    
+
     return (
         <>
             <PageHeader>
@@ -70,7 +62,7 @@ const GetInTouch = () => {
                                 <CSVLink
                                     data={userList}
                                     // headers={headers}
-                                    filename={"touch.csv"}
+                                    filename={"newsletter.csv"}
                                     className="btn btn-primary"
                                 >
                                     Export as CSV
@@ -82,12 +74,8 @@ const GetInTouch = () => {
                                 <thead className="table-light">
                                     <tr>
                                         <th scope="col">S.No.</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Contact Number</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Message</th>
-                                        <th scope="col">Created at</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Subscribed At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -97,12 +85,9 @@ const GetInTouch = () => {
                                                 return (
                                                     <tr key={cat._id}>
                                                         <td>{(page - 1) * 10 + index + 1}</td>
-                                                        <td>{cat?.firstName}</td>
-                                                        <td>{cat?.contact}</td>
                                                         <td>{cat?.email}</td>
-                                                        <td>{cat?.message}</td>
-                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>                                                        
-                                                        <td><Link to={cat?.userId?.role=='provider'?`/user/detail/${cat.userId._id}`:`/consumer/detail/${cat.userId._id}`} className="btn btn-success col-4 text-white" >View User</Link></td>
+                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
+
                                                     </tr>
                                                 )
                                             })
@@ -129,4 +114,4 @@ const GetInTouch = () => {
     );
 };
 
-export default GetInTouch;
+export default NewsLetter;

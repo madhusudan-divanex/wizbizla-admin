@@ -110,7 +110,7 @@ function AddOnList() {
                                                             <td>{item.name}</td>
                                                             <td>{item?.price}</td>
                                                             <td>{item?.type}</td>
-                                                            <td>{new Date(item?.updatedAt)?.toLocaleDateString()}</td>
+                                                            <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                             <td >
                                                                 <div className="d-flex justify-content-start gap-2">
                                                                     <Link to={`/add-on-data?id=${item._id}`} className="btn btn-sm btn-light"><FiEye /></Link>

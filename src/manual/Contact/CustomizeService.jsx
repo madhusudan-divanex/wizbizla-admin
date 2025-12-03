@@ -136,7 +136,7 @@ const CustomizedService = () => {
                         <input
                             type="text"
                             className="form-control"
-                            value={new Date(serviceData?.createdAt)?.toLocaleDateString()}
+                            value={new Date(serviceData?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}
                             disabled
                         />
                     </div>
@@ -199,7 +199,7 @@ const CustomizedService = () => {
                                                         <td>{cat?.contactNumber}</td>
                                                         <td>{cat?.email}</td>
                                                         <td>{cat?.status}</td>
-                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString()}</td>
+                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                         <td className='d-flex justify-content-center gap-3'>
                                                             <button onClick={() => setServiceData(cat)} className="btn btn-sm btn-light"><FiEye /></button>
                                                             <Link

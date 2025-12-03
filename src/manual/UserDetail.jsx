@@ -304,7 +304,7 @@ const UserDetail = () => {
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='name'>Account Create on </label>
-                                        <input id='name' type="text" className="form-control" value={new Date(values?.createdAt)?.toLocaleDateString()} disabled />
+                                        <input id='name' type="text" className="form-control" value={new Date(values?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='name'>Role</label>
@@ -339,27 +339,27 @@ const UserDetail = () => {
                                         </div>                                       
                                         <div className="col-sm-6">
                                             <label htmlFor='title'>Start Date</label>
-                                            <input id='title' type="text" className="form-control" value={new Date(membershipData?.startDate)?.toLocaleDateString()} disabled />
+                                            <input id='title' type="text" className="form-control" value={new Date(membershipData?.startDate)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                         </div>
                                         <div className="col-sm-6">
                                             <label htmlFor='email'>End Date</label>
-                                            <input type="text" className="form-control" value={new Date(membershipData?.endDate)?.toLocaleDateString()} disabled />
+                                            <input type="text" className="form-control" value={new Date(membershipData?.endDate)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                         </div>
                                         <div className="col-sm-6">
                                             <label htmlFor='email'>Due Date</label>
-                                            <input type="text" className="form-control" value={new Date(nextPay?.nextPaymentDate)?.toLocaleDateString()} disabled />
+                                            <input type="text" className="form-control" value={new Date(nextPay?.nextPaymentDate)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                         </div>
                                         <div className="col-sm-6">
                                             <label htmlFor='title'>Account Created on</label>
-                                            <input id='title' type="text" className="form-control" value={new Date(values?.createdAt)?.toLocaleDateString()} disabled />
+                                            <input id='title' type="text" className="form-control" value={new Date(values?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                         </div>
                                         <div className="col-sm-6">
                                             <label htmlFor='title'>Account Approved on</label>
-                                            <input id='title' type="text" className="form-control" value={new Date(values?.approvedOn)?.toLocaleDateString()} disabled />
+                                            <input id='title' type="text" className="form-control" value={new Date(values?.approvedOn)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                         </div>
                                         <div className="col-sm-6">
                                             <label htmlFor='email'>Account Published on</label>
-                                            <input type="text" className="form-control" value={new Date(values?.publishedOn)?.toLocaleDateString()} disabled />
+                                            <input type="text" className="form-control" value={new Date(values?.publishedOn)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                         </div>                                        
                                     </div> : 'No Data available'}
                                 </div>
@@ -629,13 +629,13 @@ const UserDetail = () => {
                                                     <div className="col-sm-6">
                                                         <label htmlFor='issuedate'>License Issue Date</label>
                                                         <input type="text" className="form-control"
-                                                            value={license.licenseIssueDate ? new Date(license.licenseIssueDate).toLocaleDateString() : ''}
+                                                            value={license.licenseIssueDate ? new Date(license.licenseIssueDate).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : ''}
                                                             disabled />
                                                     </div>
                                                     <div className="col-sm-6">
                                                         <label htmlFor='expiry'>License Expiry Date</label>
                                                         <input type="text" className="form-control"
-                                                            value={license.licenseExpiryDate ? new Date(license.licenseExpiryDate).toLocaleDateString() : ''}
+                                                            value={license.licenseExpiryDate ? new Date(license.licenseExpiryDate).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : ''}
                                                             disabled />
                                                     </div>
                                                     <div className="col-sm-6">

@@ -124,7 +124,7 @@ const References = () => {
                     </div>
                     <div className="col-sm-6">
                         <label htmlFor='name'>Requested Date </label>
-                        <input id='name' type="text" className="form-control" value={new Date(refData?.createdAt)?.toLocaleDateString()} disabled />
+                        <input id='name' type="text" className="form-control" value={new Date(refData?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                     </div>
 
                 </div>
@@ -176,7 +176,7 @@ const References = () => {
                                                             <td>{cat?.referenceUser?.firstName} {cat?.referenceUser?.lastName}</td>
                                                             <td>{cat?.userId?.firstName} {cat?.userId?.lastName}</td>
                                                             <td>{cat?.status}</td>
-                                                            <td>{new Date(cat?.createdAt)?.toLocaleDateString()}</td>
+                                                            <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                             <td className="text-end">
                                                                 <div className="d-flex justify-content-end gap-2">
                                                                     <button onClick={() => handleEdit(cat)} className="btn btn-sm btn-light"><FiEye /></button>

@@ -299,7 +299,7 @@ function ScamTip() {
 
                                                                 <td><img width={100} height={50} src={`${base_url}/${item?.image}`} /></td>
                                                                 <td>{item?.description?.slice(0, 70)}</td>
-                                                                <td>{new Date(item?.updatedAt)?.toLocaleDateString()}</td>
+                                                                <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                                 <td >
                                                                     <div className="d-flex justify-content-start gap-2">
                                                                         <button onClick={() => {

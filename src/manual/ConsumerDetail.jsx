@@ -276,7 +276,7 @@ const ConsumerDetail = () => {
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='name'>Account Create on </label>
-                                        <input id='name' type="text" className="form-control" value={new Date(values?.createdAt)?.toLocaleDateString()} disabled />
+                                        <input id='name' type="text" className="form-control" value={new Date(values?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='name'>Role</label>
@@ -307,11 +307,11 @@ const ConsumerDetail = () => {
                                         </div>
                                         <div className="col-sm-6">
                                             <label htmlFor='title'>Start Date</label>
-                                            <input id='title' type="text" className="form-control" value={new Date(membershipData?.startDate)?.toLocaleDateString()} disabled />
+                                            <input id='title' type="text" className="form-control" value={new Date(membershipData?.startDate)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                         </div>
                                         <div className="col-sm-6">
                                             <label htmlFor='email'>End Date</label>
-                                            <input type="text" className="form-control" value={new Date(membershipData?.endDate)?.toLocaleDateString()} disabled />
+                                            <input type="text" className="form-control" value={new Date(membershipData?.endDate)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                         </div>
 
                                     </div> : 'No Data available'}
@@ -369,7 +369,7 @@ const ConsumerDetail = () => {
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='dob'>D.O.B.</label>
-                                        <input type="text" className="form-control" value={new Date(profileData?.dob).toLocaleDateString()} disabled />
+                                        <input type="text" className="form-control" value={new Date(profileData?.dob).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                                     </div>
                                     <div className="col-sm-6">
                                         <label htmlFor='nationality'>Nationlaity</label>

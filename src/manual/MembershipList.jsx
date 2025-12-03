@@ -82,9 +82,10 @@ function MembershipList() {
                         <div className="card">
                             <div className="card-header">
                                 <h5 className="mb-0">Memberships</h5>
-                                <div>
+                                <div className='d-flex gap-3'>
                                     <input type='search' placeholder='search here...' value={search}
                                         onChange={handleSearchChange} />
+                                        <Link to='/membership/create' className='btn btn-primary'>Create</Link>
                                 </div>
                             </div>
                             <div className="card-body table-responsive">
@@ -111,7 +112,7 @@ function MembershipList() {
                                                             <td>{item?.price?.monthly}</td>
                                                             <td>{item?.price?.yearly}</td>
                                                             <td>{item?.type}</td>
-                                                            <td>{new Date(item?.updatedAt)?.toLocaleDateString()}</td>
+                                                            <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                             <td >
                                                                 <div className="d-flex justify-content-start gap-2">
                                                                     <Link to={`/membership/view/${item._id}`} className="btn btn-sm btn-light"><FiEdit /></Link>

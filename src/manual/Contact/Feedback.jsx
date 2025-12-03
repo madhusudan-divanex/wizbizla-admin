@@ -13,7 +13,7 @@ import { CSVLink } from 'react-csv';
 
 const Feedback = () => {
     const [isScam, setIsScam] = useState(false)
-    const [disputeData, setDisputeData] = useState({})
+    const [disputeData, setDisputeData] = useState(null)
     const [allFeedback, setAllFeedback] = useState([]);
     const [format, setFormat] = useState('')
     const [scamType, setScamType] = useState('')
@@ -61,7 +61,26 @@ const Feedback = () => {
             <PageHeader>
                 {/* <CustomersHeader /> */}
             </PageHeader>
-            <div className='main-content'>
+            {disputeData ?
+                <div className='main-content'>
+                    <div className="row mb-3">                       
+
+                        <div className="col-sm-12">
+                            <label>User</label>
+                            <input type="text" className="form-control" value={disputeData?.userId?.firstName} disabled />
+                        </div>
+
+                        <div className="col-sm-12">
+                            <label>Message</label>
+                            <input type="text" className="form-control" value={disputeData?.message} disabled />
+                        </div>
+                        <div className='col-sm-3'>
+
+                        <button className='btn btn-secondary' type='button' onClick={()=>setDisputeData(null)}>Back</button>
+                        </div>
+                    </div>
+                </div>
+                : <div className='main-content'>
                     <div className='row'></div>
                     <div className="container-fluid">
                         <div className="card">
@@ -98,12 +117,12 @@ const Feedback = () => {
                                                         <tr key={cat._id}>
                                                             <td>{(page - 1) * 10 + index + 1}</td>
                                                             <td>{cat?.userId.email}</td>
-                                                            <td>{cat?.message}</td>
-                                                            <td>{new Date(cat?.createdAt)?.toLocaleDateString()}</td>
+                                                            <td>{cat?.message?.length>50? cat?.message?.slice(0,50)+ '...':cat?.message}</td>
+                                                            <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                             <td className="text-end">
                                                                 <div className="d-flex justify-content-end gap-2">
                                                                     <button onClick={() => handleEdit(cat)} className="btn btn-sm btn-light"><FiEye /></button>
-                                                                    <Link to={cat?.userId?.role=='provider'?`/user/detail/${cat.userId._id}`:`/consumer/detail/${cat.userId._id}`} className="btn btn-success btn-sm btn-light text-white" >View User</Link>
+                                                                    <Link to={cat?.userId?.role == 'provider' ? `/user/detail/${cat.userId._id}` : `/consumer/detail/${cat.userId._id}`} className="btn btn-success btn-sm btn-light text-white" >View User</Link>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -126,7 +145,7 @@ const Feedback = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>}
             <Footer />
         </>
     );

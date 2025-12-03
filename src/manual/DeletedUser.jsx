@@ -99,7 +99,7 @@ const DeletedUser = () => {
                                                         <td>{cat?.email}</td>
                                                         <td>{cat?.reason}</td>
                                                         <td>{cat?.contactNumber}</td>
-                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString()}</td>
+                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                         
                                                     </tr>
                                                 )

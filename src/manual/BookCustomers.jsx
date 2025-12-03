@@ -93,7 +93,7 @@ const BookCustomer = () => {
                                                     <tr key={cat._id}>
                                                         <td>{(page - 1) * 10 + index + 1}</td>
                                                         <td>{cat?.email}</td>
-                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString()}</td>
+                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                         
                                                     </tr>
                                                 )

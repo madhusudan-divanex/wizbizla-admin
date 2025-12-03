@@ -41,6 +41,7 @@ import ScamTip from "../manual/ScamTips";
 import Faq from "../manual/Faq";
 import BlogCategory from "../manual/BlogCategory";
 import Blog from "../manual/Blog";
+import NewsLetter from "../manual/NewsLetter";
 
 export const router = createBrowserRouter([
     {
@@ -182,6 +183,10 @@ export const router = createBrowserRouter([
             {
                 path: "/bespoke-concierge",
                 element: <ProtectedRoute component={BespokeService} />
+            },
+            {
+                path: "/newsletter",
+                element: <ProtectedRoute component={NewsLetter} />
             },
             {
                 path: "/cms/contact",

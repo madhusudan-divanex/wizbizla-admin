@@ -171,7 +171,7 @@ const ServiceDispute = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                value={disputeData?.createdAt ? new Date(disputeData.createdAt).toLocaleDateString() : ""}
+                                value={disputeData?.createdAt ? new Date(disputeData.createdAt).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : ""}
                                 disabled
                             />
                         </div>
@@ -259,7 +259,7 @@ const ServiceDispute = () => {
                                                             <td>{cat?.type}</td>
                                                             <td>{cat?.subject}</td>
                                                             <td>{cat?.addOnId?.name}</td>
-                                                            <td>{new Date(cat?.createdAt)?.toLocaleDateString()}</td>
+                                                            <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                             <td>{cat?.status}</td>
                                                             <td className="text-end">
                                                                 <div className="d-flex justify-content-end gap-2">

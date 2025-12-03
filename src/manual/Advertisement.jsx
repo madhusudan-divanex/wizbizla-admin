@@ -92,7 +92,7 @@ const Advertisement = () => {
                 </div>                
                 <div className="col-sm-6">
                     <label htmlFor='name'>Submit on </label>
-                    <input id='name' type="text" className="form-control" value={new Date(adData?.createdAt)?.toLocaleDateString()} disabled />
+                    <input id='name' type="text" className="form-control" value={new Date(adData?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
                 </div>
                 <div className="col-sm-6">
                     <label htmlFor='name'>Description</label>

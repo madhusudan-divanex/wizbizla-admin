@@ -101,7 +101,7 @@ const Concern = () => {
                                                         <td>{cat?.contact}</td>
                                                         <td>{cat?.email}</td>
                                                         <td>{cat?.message}</td>
-                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString()}</td>                                                        
+                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>                                                        
                                                         <td><Link to={cat?.userId?.role=='provider'?`/user/detail/${cat.userId._id}`:`/consumer/detail/${cat.userId._id}`} className="btn btn-success col-4 text-white" >View User</Link></td>
                                                     </tr>
                                                 )

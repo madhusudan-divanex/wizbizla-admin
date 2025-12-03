@@ -175,7 +175,7 @@ function SubCategory() {
                                                             <tr key={item._id}>
                                                                 <td>{(page - 1) * 10 + index + 1}</td>
                                                                 <td>{item.name}</td>
-                                                                <td>{new Date(item?.updatedAt)?.toLocaleDateString()}</td>
+                                                                <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                                 <td >
                                                                     <div className="d-flex justify-content-start gap-2">
                                                                         <button onClick={()=>{
