@@ -329,6 +329,12 @@ export const menuList = [
                 path: "/references",
                 subdropdownMenu: false
             },
+             {
+                id: 2,
+                name: "Advertisement",
+                path: "/advertisement",
+                subdropdownMenu: false
+            },
         ]
      },
      {

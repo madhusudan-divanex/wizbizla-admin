@@ -122,7 +122,7 @@ function Category() {
                                                             </td>
 
                                                             <td><img width={100} height={50} src={`${base_url}/${item?.image}`} /></td>
-                                                             <td><img width={100} height={50} src={`${base_url}/${item?.icon}`} /></td>
+                                                            <td><img width={100} height={50} src={`${base_url}/${item?.icon}`} /></td>
                                                             <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
                                                             <td >
                                                                 <div className="d-flex justify-content-start gap-2">

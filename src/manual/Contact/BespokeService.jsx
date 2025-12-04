@@ -121,7 +121,7 @@ const BespokeService = () => {
 
                     <div className="col-sm-6">
                         <label>Business Category</label>
-                        <input type="text" className="form-control" value={serviceData?.businessCategory || "N/A"} disabled />
+                        <input type="text" className="form-control" value={serviceData?.businessCategory?.name || "N/A"} disabled />
                     </div>
 
                     <div className="col-sm-6">
