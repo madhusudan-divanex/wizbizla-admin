@@ -42,6 +42,7 @@ import Faq from "../manual/Faq";
 import BlogCategory from "../manual/BlogCategory";
 import Blog from "../manual/Blog";
 import NewsLetter from "../manual/NewsLetter";
+import GetAddReferences from "../manual/GetAddReference";
 
 export const router = createBrowserRouter([
     {
@@ -151,6 +152,10 @@ export const router = createBrowserRouter([
             {
                 path: "/references",
                 element: <ProtectedRoute component={References} />
+            },
+             {
+                path: "/get-add-references",
+                element: <ProtectedRoute component={GetAddReferences} />
             },
             {
                 path: "/consumer/detail/:id",

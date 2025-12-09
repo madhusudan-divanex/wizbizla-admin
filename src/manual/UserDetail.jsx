@@ -317,6 +317,8 @@ const UserDetail = () => {
                                     {Object.keys(values3)?.length>0 && values.role=='provider' && <div className="col-sm-6">
                                         <label htmlFor='name'>Update Status To</label>
                                         <select id='name' name='status' type="text" className="form-select" value={status} onChange={(e) => setStatus(e.target.value)}>
+                                            {/* <option>Select</option> */}
+
                                             <option value="pending">Pending</option>
                                             <option value="live">Live</option>
                                             {/* <option value="block">Block</option> */}

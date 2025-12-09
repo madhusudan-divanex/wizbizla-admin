@@ -147,7 +147,7 @@ const ScamReport = () => {
                 </div>
                 <div className="col-sm-6 d-flex flex-column">
                     <label htmlFor='name'>Image </label>
-                    <img className='img-fluid' src={`${base_url}/${scamData?.image}`} width={400} height={250}/>
+                    <img className='img-fluid' src={`${base_url}/${scamData?.image}`} style={{width:'350px',height:'300px'}}/>
                 </div>
             </div>
                 <div className="col-2 pb-5">

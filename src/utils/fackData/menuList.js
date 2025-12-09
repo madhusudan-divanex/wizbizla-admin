@@ -323,16 +323,120 @@ export const menuList = [
         path: "#",
         icon: 'fa-ad',
         dropdownMenu: [
+            // {
+            //     id: 1,
+            //     name: "References",
+            //     path: "/references",
+            //     subdropdownMenu: false
+            // },
+             {
+                id: 2,
+                name: "Requests",
+                path: "/advertisement",
+                subdropdownMenu: false
+            },
+        ]
+     },
+      {
+        id: 8,
+        name: "Welcome Basket Management ",
+        path: "#",
+        icon: 'fa-basket',
+        dropdownMenu: [
+            // {
+            //     id: 1,
+            //     name: "References",
+            //     path: "/references",
+            //     subdropdownMenu: false
+            // },
+             {
+                id: 2,
+                name: "Requests",
+                path: "",
+                subdropdownMenu: false
+            },
+        ]
+     },
+     {
+        id: 8,
+        name: "Reference  Management ",
+        path: "#",
+        icon: 'feather-users',
+        dropdownMenu: [
             {
                 id: 1,
                 name: "References",
-                path: "/references",
+                path: "/get-add-references",
                 subdropdownMenu: false
             },
              {
                 id: 2,
-                name: "Advertisement",
-                path: "/advertisement",
+                name: "Signature Profile References",
+                path: "/references",
+                subdropdownMenu: false
+            },
+        ]
+     },
+     {
+        id: 9,
+        name: "Blog Management ",
+        path: "#",
+        icon: 'fa-blog',
+        dropdownMenu: [
+            {
+                id: 1,
+                name: "Blogs",
+                path: "/cms/blog",
+                subdropdownMenu: false
+            },
+             {
+                id: 2,
+                name: "Add New Blog",
+                path: "/cms/blog?create=true",
+                subdropdownMenu: false
+            },
+        ]
+     },
+     {
+        id: 10,
+        name: "General Pages",
+        path: "#",
+        icon: 'fa-general',
+        dropdownMenu: [
+            {
+                id: 1,
+                name: "Faq",
+                path: "/cms/faq",
+                subdropdownMenu: false
+            },
+             {
+                id: 2,
+                name: "Scam Tip",
+                path: "/cms/scam-tip",
+                subdropdownMenu: false
+            },
+            {
+                id: 3,
+                name: "Purchase List",
+                path: "/membership-purchase",
+                subdropdownMenu: false
+            },
+            {
+                id: 4,
+                name: "Consumers",
+                path: "/user/consumer",
+                subdropdownMenu: false
+            },
+            {
+                id: 6,
+                name: "Deleted User",
+                path: "/user/deleted-user",
+                subdropdownMenu: false
+            },
+             {
+                id: 7,
+                name: "Blog Category",
+                path: "/cms/blog-category",
                 subdropdownMenu: false
             },
         ]
@@ -377,7 +481,7 @@ export const menuList = [
     },
     {
         id: 8,
-        name: "MemberShip Management",
+        name: "MemberShip ",
         path: "#",
         icon: 'fa-m',
         dropdownMenu: [
@@ -419,30 +523,7 @@ export const menuList = [
                 path: "/sub-category",
                 subdropdownMenu: false
             },
-            {
-                id: 4,
-                name: "Scam Tip",
-                path: "/cms/scam-tip",
-                subdropdownMenu: false
-            },
-            {
-                id: 5,
-                name: "Faq",
-                path: "/cms/faq",
-                subdropdownMenu: false
-            },
-            {
-                id: 6,
-                name: "Blog Category",
-                path: "/cms/blog-category",
-                subdropdownMenu: false
-            },
-            {
-                id: 6,
-                name: "Blog",
-                path: "/cms/blog",
-                subdropdownMenu: false
-            },
+           
             
         ]
     },

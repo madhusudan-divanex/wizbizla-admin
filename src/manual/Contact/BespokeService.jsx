@@ -131,7 +131,7 @@ const BespokeService = () => {
 
                     <div className="col-sm-6">
                         <label>Price Range</label>
-                        <input type="text" className="form-control" value={serviceData?.priceRange ?? "N/A"} disabled />
+                        <input type="text" className="form-control" value={serviceData?.priceRange?.minPrice +'-'+serviceData?.priceRange?.maxPrice ?? "N/A"} disabled />
                     </div>
 
                     <div className="col-sm-6">

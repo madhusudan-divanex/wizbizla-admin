@@ -3,7 +3,7 @@ import Footer from '@/components/shared/Footer'
 import PageHeader from '@/components/shared/pageHeader/PageHeader'
 import React, { useEffect, useState } from 'react';
 import { FiEye, FiTrash2 } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -14,6 +14,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 function Blog() {
+    const [searchParams]=useSearchParams()
     const [blogData, setBlogData] = useState(null);
     const [blogList, setBlogList] = useState([]);
     const [page, setPage] = useState(1);
@@ -62,7 +63,11 @@ function Blog() {
             console.log("error fetch blogs", error);
         }
     }
-
+    useEffect(() => {
+  if (searchParams.get('create')) {
+    setBlogData(true);
+  }
+}, [searchParams.get('create')]);
     useEffect(() => {
         fetchBlog();
     }, [page, search]);

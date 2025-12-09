@@ -19,13 +19,14 @@ const Advertisement = () => {
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [search, setSearch] = useState('');
+    const [status, setStatus] = useState('requested')
     const [adData, setAdData] = useState(null)
     const [occupiedDates, setOccupiedDates] = useState([])
 
     const fetchAds = async (pageNumber = page, searchQuery = search) => {
         try {
             const result = await getSecureApiData(
-                `ads?page=${pageNumber}`
+                `ads?page=${pageNumber}&status=${status}`
             );
 
             if (result.status) {
@@ -55,11 +56,9 @@ const Advertisement = () => {
 
 
     useEffect(() => {
-        setTimeout(() => {
-            fetchAds();
-        }, 500)
+        fetchAds();
 
-    }, [page, search]);
+    }, [page, status]);
     useEffect(() => {
         fetchOccupied()
     }, [])
@@ -94,12 +93,10 @@ const Advertisement = () => {
             return
         }
         const data = new FormData()
-        data.append('adImage', adData?.adImage)
-        data.append('adDesc', adData?.adDesc)
-        data.append('amount', adData?.amount)
-        data.append('startDate', adData?.startDate)
-        data.append('endDate', adData?.endDate)
         data.append('adId', adData?._id)
+        Object.entries(adData).forEach(([key, value]) => {
+            data.append(key, value);
+        });
 
         try {
             const response = await postApiData('advertisement', data)
@@ -115,6 +112,32 @@ const Advertisement = () => {
     const formatDate = (date) =>
         date ? new Date(date).toISOString().split("T")[0] : "";
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Create a temporary image to read its dimensions
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+
+        img.onload = () => {
+            if (adData?.spot === "ListingPage") {
+                // check required height
+                if (img.height < 440) {
+                    toast.error("Banner image height must be exactly 440px!");
+                    return;
+                }
+                if (img.width < 1440) {
+                    toast.error("Banner image height must be exactly 1440px!");
+                    return;
+                }
+            }
+
+            // If valid, save image to state
+            setAdData({ ...adData, image: file });
+        };
+    };
+
     return (
         <>
             <PageHeader>
@@ -125,57 +148,70 @@ const Advertisement = () => {
                     <div className="row mb-3">
                         <div className="col-sm-6">
                             <label htmlFor='name'>Account Name</label>
-                            <input id='name' type="text" className="form-control" value={adData?.accountName} disabled />
+                            <input id='name' type="text" className="form-control" value={adData?.accountName} onChange={(e) => setAdData({ ...adData, accountName: e.target.value })} />
+
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor='name'>Email</label>
-                            <input id='name' type="text" className="form-control" value={adData?.email} disabled />
+                            <input id='name' type="text" className="form-control" value={adData?.email} onChange={(e) => setAdData({ ...adData, email: e.target.value })} />
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor='name'>Spot</label>
-                            <input id='name' type="text" className="form-control" value={adData?.spot} disabled />
+                            <select name="spot" value={adData?.spot} onChange={(e) => setAdData({ ...adData, spot: e.target.value })} id="" className="form-select" required>
+                                <option value="">Select page</option>
+                                <option value="HomePageAccredited">Home Page Accredited</option>
+                                <option value="HomePage2">Home page 2</option>
+                                <option value="CategoryPage">Category Page</option>
+                                <option value="ListingPage">Listing Page</option>
+                            </select>
+                            {/* <input id='name' type="text" className="form-control" /> */}
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor='name'>Contact Number</label>
-                            <input id='name' type="text" className="form-control" value={adData?.contactNumber} disabled />
+                            <input id='name' type="text" className="form-control" value={adData?.contactNumber} onChange={(e) => setAdData({ ...adData, contactNumber: e.target.value })} />
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor='name'>Submit on </label>
                             <input id='name' type="text" className="form-control" value={new Date(adData?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })} disabled />
                         </div>
                         <div className="col-sm-6">
-                            <label htmlFor='name'>Description</label>
-                            <textarea row={10} id='name' type="text" className="form-control" value={adData?.detail} disabled />
-                        </div>
-                        <div className="col-sm-6">
                             <label htmlFor='name'>Status</label>
-                            <input id='name' type="text" className="form-control text-capitalize" value={adData?.status} disabled />
+                            <select className='form-select' value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} >
+                                <option value="requested">Requested</option>
+                                <option value="approve">Approved</option>
+                                <option value="live">Live</option>
+                                <option value="declined">Declined</option>
+                                <option value="expired">Expired</option>
+
+                            </select>
+                            {/* <input id='name' type="text" className="form-control text-capitalize" value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} /> */}
                         </div>
-                        <div className="col-sm-6 d-flex flex-column">
+                        {/* <div className="col-sm-6 d-flex flex-column">
                             <label htmlFor='name'>Image </label>
                             <img className='img-fluid' src={`${base_url}/${adData?.image}`} width={400} height={250} />
-                        </div>
-                        {(adData?.status !== 'under-review' && adData?.status !== 'declined') && <>
+                            </div> */}
+                        {(adData?.status !== 'requested' && adData?.status !== 'declined') && <>
                             <div className="col-sm-6">
                                 <label htmlFor='name'>Ad Image</label>
-                                <input type='file' className="form-control" required={!adData?.adImage} onChange={(e) => setAdData({ ...adData, adImage: e.target.files[0] })} disabled={adData?.status !== 'approve'} />
+                                <input type='file' className="form-control"
+                                    required={!adData?.image} onChange={handleImageChange} disabled={adData?.status !== 'approve'} />
+                                {adData?.image && <img
+                                    src={
+                                        adData?.image instanceof File
+                                            ? URL.createObjectURL(adData.image)
+                                            : `${base_url}/${adData?.image}`
+                                    }
+                                    alt="Ad Preview"
+                                    style={{ width: "220px", height: "120px", objectFit: "cover" }}
+                                />}
                             </div>
-                            {adData?.adImage && <img
-                                src={
-                                    adData?.adImage instanceof File
-                                        ? URL.createObjectURL(adData.adImage)   
-                                        : `${base_url}/${adData?.adImage}`
-                                }
-                                alt="Ad Preview"
-                                style={{ width: "220px", height: "120px", objectFit: "cover" }}
-                            />}
 
                             <div className="col-sm-6 d-flex flex-column">
                                 <label htmlFor='name'>Start Date</label>
                                 {/* <input type='date' value={adData?.startDate}
                                     min={new Date().toISOString().split("T")[0]}
                                     onChange={(e) => setAdData({ ...adData, startDate: e.target.value })} required className="form-control"
-                                     disabled={adData?.status !== 'approve'} /> */}
+                                    disabled={adData?.status !== 'approve'} /> */}
                                 <DatePicker
                                     selected={adData.startDate}
                                     onChange={date => setAdData({ ...adData, startDate: date })}
@@ -200,20 +236,20 @@ const Advertisement = () => {
                                 {/* <input type='date' value={adData?.endDate}
                                     min={
                                         adData?.startDate
-                                            ? new Date(new Date(adData.startDate).getTime() + 24 * 60 * 60 * 1000)
-                                                .toISOString()
-                                                .split("T")[0]
-                                            : new Date().toISOString().split("T")[0]
-                                    }
-                                    onChange={(e) => setAdData({ ...adData, endDate: e.target.value })} required className="form-control" disabled={adData?.status !== 'approve'} /> */}
-                            </div>
-                            <div className="col-sm-6">
-                                <label htmlFor='name'>Ad Description</label>
-                                <textarea row={10} id='name' type="text" required onChange={(e) => setAdData({ ...adData, adDesc: e.target.value })} className="form-control" value={adData?.adDesc} disabled={adData?.status !== 'approve'} />
+                                        ? new Date(new Date(adData.startDate).getTime() + 24 * 60 * 60 * 1000)
+                                        .toISOString()
+                                        .split("T")[0]
+                                        : new Date().toISOString().split("T")[0]
+                                        }
+                                        onChange={(e) => setAdData({ ...adData, endDate: e.target.value })} required className="form-control" disabled={adData?.status !== 'approve'} /> */}
                             </div>
                             <div className="col-sm-6">
                                 <label htmlFor='name'>Amount</label>
                                 <input type='number' className="form-control" required name='amount' value={adData?.amount} onChange={(e) => setAdData({ ...adData, amount: e.target.value })} disabled={adData?.status !== 'approve'} />
+                            </div>
+                            <div className="col-sm-6">
+                                <label htmlFor='name'>Description</label>
+                                <textarea rows={10} id='name' type="text" className="form-control" value={adData?.detail} onChange={(e) => setAdData({ ...adData, description: e.target.value })} />
                             </div>
                         </>}
                     </div>
@@ -229,6 +265,15 @@ const Advertisement = () => {
                             <div className="card-header">
                                 <h5 className="mb-0">Advertisement</h5>
                                 <div className='d-flex gap-5'>
+                                    <select className='form-select' value={status} onChange={(e) => setStatus(e.target.value)}>
+                                        <option value="requested">Requested</option>
+                                        <option value="approve">Approved</option>
+                                        <option value="declined">Declined</option>
+                                        <option value="expired">Expired</option>
+                                        <option value="live">Live</option>
+
+
+                                    </select>
                                     {/* <input type='search' placeholder='search here...' value={search}
                                     onChange={handleSearchChange} /> */}
                                     <CSVLink
@@ -269,7 +314,7 @@ const Advertisement = () => {
                                                                     <button onClick={() => setAdData({ ...cat, startDate: formatDate(cat.startDate), endDate: formatDate(cat.endDate) })}
                                                                         className="btn btn-sm btn-light"><FiEye /></button>
                                                                     {/* <button className="btn btn-sm btn-light text-danger" onClick={() => handleDelete(cat._id)}><FiTrash2 /></button> */}
-                                                                    {cat?.status == 'under-review' && <>
+                                                                    {cat?.status == 'requested' && <>
                                                                         <button title='Approve' className="btn btn-success btn-sm btn-light text-white" onClick={() => handleAction(cat._id, 'approve')}><FiCheckCircle size={10} /></button>
                                                                         <button title='Declined' className="btn btn-danger btn-sm btn-light text-white" onClick={() => handleAction(cat._id, 'declined')}><FiXCircle /></button>
                                                                     </>}
