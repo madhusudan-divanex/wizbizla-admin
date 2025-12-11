@@ -83,7 +83,7 @@ const GetAddReferences = () => {
         setIsScam(true)
     }
     async function handleAction() {
-        const data = { refId: refData._id, status:refData.status,comment:refData.comment }
+        const data = { refId: refData._id, status: refData.status, comment: refData.comment }
         try {
             const result = await postApiData('reference-action', data)
             if (result.success) {
@@ -95,6 +95,24 @@ const GetAddReferences = () => {
 
         }
     }
+    const updateStatus = async (referenceId, featureId, status) => {
+        const data = { referenceId, featureId, status }
+        try {
+            const result = await postApiData(
+                `reference-action`, data
+            );
+
+            if (result.success) {
+                toast.success('Status updated')
+                fetchUsers()
+                // setPage(result.currentPage);
+                // setPages(result.totalPages);
+                // setTotal(result.totalRef);
+            }
+        } catch (error) {
+            console.log("Error fetching scams:", error);
+        }
+    };
     return (
         <>
             <PageHeader>
@@ -103,61 +121,60 @@ const GetAddReferences = () => {
             {isScam ?
                 <div className='main-content'>
                     <div className="row mb-3" >
-                    <div className="col-sm-6">
-                        <label htmlFor='name'>User</label>
-                        <input id='name' type="text" className="form-control" value={refData?.user?.firstName +' ' + refData?.user?.lastName} disabled />
-                    </div>
-                    <div className="col-sm-6">
-                        <label htmlFor='name'>Email</label>
-                        <input id='name' type="text" className="form-control" value={refData?.user?.email} disabled />
-                    </div>
-                    <div className='d-flex my-3 justify-content-between'>
+                        <div className="col-sm-6">
+                            <label htmlFor='name'>User</label>
+                            <input id='name' type="text" className="form-control" value={refData?.user?.firstName + ' ' + refData?.user?.lastName} disabled />
+                        </div>
+                        <div className="col-sm-6">
+                            <label htmlFor='name'>Email</label>
+                            <input id='name' type="text" className="form-control" value={refData?.user?.email} disabled />
+                        </div>
+                        <div className='d-flex my-3 justify-content-between'>
 
-                    {/* <button onClick={() => setIsScam(false)} className='btn btn-secondary'>Back</button> */}
-                    <Link to={`/user/detail/${refData?.user?._id}`} className='btn btn-success'>View User</Link>
-                </div>
+                            {/* <button onClick={() => setIsScam(false)} className='btn btn-secondary'>Back</button> */}
+                            <Link to={`/user/detail/${refData?.user?._id}`} className='btn btn-success'>View User</Link>
+                        </div>
                     </div>
-                    {refData?.references?.map((item,key)=>
-                    <div className="row mb-3" key={key}>
-                    <div className="col-sm-6">
-                        <label htmlFor='name'>Name</label>
-                        <input id='name' type="text" className="form-control" value={item?.name} disabled />
-                    </div>
-                    <div className="col-sm-6">
-                        <label htmlFor='name'>Contact Detail</label>
-                        <input id='name' type="text" className="form-control" value={item?.contact} disabled />
-                    </div>
-                    <div className="col-sm-6">
-                        <label htmlFor='name'>Work Together</label>
-                        <input id='name' type="text" className="form-control" value={item?.workTogether} disabled />
-                    </div>
-                    <div className="col-sm-6">
-                        <label htmlFor='name'>Relationship</label>
-                        <input id='name' type="text" className="form-control" value={item?.relationship} disabled />
-                    </div>
-                    <div className="col-sm-6">
-                        <label htmlFor='name'>Status</label>
-                        <select id='name' name='status' type="text" className="form-select" value={refData.status} onChange={(e) => setRefData({...refData,status: e.target.value})}>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approve</option>
-                            <option value="declined">Declined</option>
-                        </select>
-                    </div>
-                    {/* <div className="col-sm-6">
-                        <label htmlFor='name'>Comment</label>
-                        <input id='name' type="text" className="form-control" value={refData?.comment} name='comment'  onChange={(e) => setRefData({...refData,comment:e.target.value})}/>
-                    </div> */}
-                    {/* <div className="col-sm-6">
-                        <label htmlFor='name'>Requested Date </label>
-                        <input id='name' type="text" className="form-control" value={new Date(refData?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })} disabled />
-                    </div> */}
+                    {refData?.references?.map((item, key) =>
+                        <div className="row mb-3" key={key}>
+                            <div className="col-sm-6">
+                                <label htmlFor='name'>Name</label>
+                                <input id='name' type="text" className="form-control" value={item?.name} disabled />
+                            </div>
+                            <div className="col-sm-6">
+                                <label htmlFor='name'>Contact Detail</label>
+                                <input id='name' type="text" className="form-control" value={item?.contact} disabled />
+                            </div>
+                            <div className="col-sm-6">
+                                <label htmlFor='name'>Work Together</label>
+                                <input id='name' type="text" className="form-control" value={item?.workTogether} disabled />
+                            </div>
+                            <div className="col-sm-6">
+                                <label htmlFor='name'>Relationship</label>
+                                <input id='name' type="text" className="form-control" value={item?.relationship} disabled />
+                            </div>
+                            <div className="col-sm-6">
+                                <label htmlFor='name'>Status</label>
+                                <select id='name' name='status' type="text" className="form-select" value={item.status}
+                                    onChange={(e) => {
+                                        const newStatus = e.target.value;
+                                        const updatedRefs = refData.references.map((ref) =>
+                                            ref._id === item._id ? { ...ref, status: newStatus } : ref
+                                        );
 
-                <div className='d-flex my-3 justify-content-between'>
+                                        setRefData({ ...refData, references: updatedRefs });
+                                    }}>
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approve</option>
+                                    <option value="declined">Declined</option>
+                                </select>
+                            </div>
+                            <div className='d-flex my-3 justify-content-between'>
 
-                    {/* <button onClick={() => setIsScam(false)} className='btn btn-secondary'>Back</button> */}
-                    <button onClick={() => handleAction()} className='btn btn-success'>Update</button>
-                </div>
-                </div>)}
+                                {/* <button onClick={() => setIsScam(false)} className='btn btn-secondary'>Back</button> */}
+                                <button onClick={() => updateStatus(item?._id, refData?.featureId, item?.status)} className='btn btn-success'>Update</button>
+                            </div>
+                        </div>)}
                 </div>
                 : <div className='main-content'>
                     <div className='row'></div>
@@ -166,7 +183,6 @@ const GetAddReferences = () => {
                             <div className="card-header">
                                 <h5 className="mb-0">Provider References</h5>
                                 <div className='d-flex gap-5'>
-
                                     {/* <input type='search' placeholder='search here...' value={search}
                                     onChange={handleSearchChange} /> */}
                                     {/* <CSVLink
@@ -198,7 +214,7 @@ const GetAddReferences = () => {
                                                             <td>{(page - 1) * 10 + index + 1}</td>
                                                             <td>{cat?.user?.firstName} {cat?.referenceUser?.lastName}</td>
                                                             <td>{cat?.references?.length}</td>
-                                                            
+
                                                             <td className="text-end">
                                                                 <div className="d-flex justify-content-end gap-2">
                                                                     <button onClick={() => handleEdit(cat)} className="btn btn-sm btn-light"><FiEye /></button>
@@ -217,12 +233,12 @@ const GetAddReferences = () => {
                                         }
                                     </tbody>
                                 </table>
-                                <div className="d-flex justify-content-between align-items-center p-2">
+                                {/* <div className="d-flex justify-content-between align-items-center p-2">
                                     <div className="text-muted">
                                         Showing {(page - 1) * 10 + 1} to {Math.min(page * 10, total)} of {total} entries
                                     </div>
                                     <Pagination page={page} pages={pages} onPageChange={handlePageChange} />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

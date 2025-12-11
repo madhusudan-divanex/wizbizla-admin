@@ -2,3 +2,17 @@
     font-size: 18px;
     stroke-width: 0px;
 }
+.cht-usr-pic {
+   width: 60px;
+   height: 60px;
+   object-fit: cover;
+   border-radius: 50%;
+   background: #C0C6DD;
+   position: relative;
+}
+.occupied-date {
+  background: red !important;
+  color: white !important;
+  /* border-radius: 50%; */
+  font-weight: bold;
+}

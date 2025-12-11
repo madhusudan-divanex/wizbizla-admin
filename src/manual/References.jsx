@@ -85,8 +85,9 @@ const References = () => {
     async function handleAction() {
         const data = { refId: refData._id, status:refData.status,comment:refData.comment }
         try {
-            const result = await postApiData('reference-action', data)
+            const result = await postApiData('trusted-reference-action', data)
             if (result.success) {
+                fetchUsers()
                 toast.success("Reference status is updated")
             } else {
                 toast.error(result.message)

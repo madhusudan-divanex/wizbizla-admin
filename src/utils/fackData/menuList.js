@@ -319,7 +319,7 @@ export const menuList = [
     },
      {
         id: 7,
-        name: "Advertisement Management ",
+        name: "Advertisement",
         path: "#",
         icon: 'fa-ad',
         dropdownMenu: [
@@ -339,7 +339,7 @@ export const menuList = [
      },
       {
         id: 8,
-        name: "Welcome Basket Management ",
+        name: "Welcome Baske",
         path: "#",
         icon: 'fa-basket',
         dropdownMenu: [
@@ -359,7 +359,7 @@ export const menuList = [
      },
      {
         id: 8,
-        name: "Reference  Management ",
+        name: "Reference",
         path: "#",
         icon: 'feather-users',
         dropdownMenu: [
@@ -379,7 +379,7 @@ export const menuList = [
      },
      {
         id: 9,
-        name: "Blog Management ",
+        name: "Blog",
         path: "#",
         icon: 'fa-blog',
         dropdownMenu: [
@@ -393,6 +393,20 @@ export const menuList = [
                 id: 2,
                 name: "Add New Blog",
                 path: "/cms/blog?create=true",
+                subdropdownMenu: false
+            },
+        ]
+     },
+     {
+        id: 10,
+        name: "Chat",
+        path: "#",
+        icon: 'fa-chat',
+        dropdownMenu: [
+            {
+                id: 1,
+                name: "Chat",
+                path: "/chat",
                 subdropdownMenu: false
             },
         ]
@@ -507,7 +521,7 @@ export const menuList = [
     },
     {
         id: 9,
-        name: "Category Management ",
+        name: "Categor",
         path: "#",
         icon: 'fa-puzzel',
         dropdownMenu: [

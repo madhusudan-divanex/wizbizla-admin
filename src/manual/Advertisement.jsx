@@ -12,7 +12,8 @@ import PageHeader from '@/components/shared/pageHeader/PageHeader';
 import { CSVLink } from 'react-csv';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-
+import Calendar from 'react-calendar';
+import "react-calendar/dist/Calendar.css";
 const Advertisement = () => {
     const [adList, setAdList] = useState([]);
     const [page, setPage] = useState(1);
@@ -21,6 +22,7 @@ const Advertisement = () => {
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState('requested')
     const [adData, setAdData] = useState(null)
+    const [calendarDate, setCalanderDate] = useState()
     const [occupiedDates, setOccupiedDates] = useState([])
 
     const fetchAds = async (pageNumber = page, searchQuery = search) => {
@@ -45,6 +47,7 @@ const Advertisement = () => {
 
             if (result.status) {
                 const dates = result.occupiedDates.map(d => new Date(d));
+
                 setOccupiedDates(dates);
             } else {
                 toast.error(result.message)
@@ -53,7 +56,12 @@ const Advertisement = () => {
             console.log("Error fetching ads:", error);
         }
     };
-
+    const tileClassName = ({ date }) => {
+        if (occupiedDates?.includes(date.toDateString())) {
+            return "occupied-date"; // CSS class
+        }
+        return "";
+    };
 
     useEffect(() => {
         fetchAds();
@@ -174,17 +182,19 @@ const Advertisement = () => {
                             <label htmlFor='name'>Submit on </label>
                             <input id='name' type="text" className="form-control" value={new Date(adData?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })} disabled />
                         </div>
-                        <div className="col-sm-6">
-                            <label htmlFor='name'>Status</label>
-                            <select className='form-select' value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} >
-                                <option value="requested">Requested</option>
-                                <option value="approve">Approved</option>
-                                <option value="live">Live</option>
-                                <option value="declined">Declined</option>
-                                <option value="expired">Expired</option>
+                        <br/>
+                        <div className='col-sm-6'>
+                            <label htmlFor='name'>Calendar</label>
+                                <Calendar
+                                    tileClassName={({ date }) => {
+                                        // check if date matches
+                                        const isOccupied = occupiedDates.some(
+                                            (d) => d.toDateString() === date.toDateString()
+                                        );
 
-                            </select>
-                            {/* <input id='name' type="text" className="form-control text-capitalize" value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} /> */}
+                                        return isOccupied ? "occupied-date" : null;
+                                    }}
+                                />
                         </div>
                         {/* <div className="col-sm-6 d-flex flex-column">
                             <label htmlFor='name'>Image </label>
@@ -208,10 +218,6 @@ const Advertisement = () => {
 
                             <div className="col-sm-6 d-flex flex-column">
                                 <label htmlFor='name'>Start Date</label>
-                                {/* <input type='date' value={adData?.startDate}
-                                    min={new Date().toISOString().split("T")[0]}
-                                    onChange={(e) => setAdData({ ...adData, startDate: e.target.value })} required className="form-control"
-                                    disabled={adData?.status !== 'approve'} /> */}
                                 <DatePicker
                                     selected={adData.startDate}
                                     onChange={date => setAdData({ ...adData, startDate: date })}
@@ -233,19 +239,23 @@ const Advertisement = () => {
                                     className="form-control"
                                     disabled={adData.status !== "approve"}
                                 />
-                                {/* <input type='date' value={adData?.endDate}
-                                    min={
-                                        adData?.startDate
-                                        ? new Date(new Date(adData.startDate).getTime() + 24 * 60 * 60 * 1000)
-                                        .toISOString()
-                                        .split("T")[0]
-                                        : new Date().toISOString().split("T")[0]
-                                        }
-                                        onChange={(e) => setAdData({ ...adData, endDate: e.target.value })} required className="form-control" disabled={adData?.status !== 'approve'} /> */}
+
                             </div>
                             <div className="col-sm-6">
                                 <label htmlFor='name'>Amount</label>
                                 <input type='number' className="form-control" required name='amount' value={adData?.amount} onChange={(e) => setAdData({ ...adData, amount: e.target.value })} disabled={adData?.status !== 'approve'} />
+                            </div>
+                            <div className="col-sm-6">
+                                <label htmlFor='name'>Status</label>
+                                <select className='form-select' value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} >
+                                    <option value="requested">Requested</option>
+                                    <option value="approve">Approved Ad</option>
+                                    <option value="live">Live</option>
+                                    <option value="declined">Declined</option>
+                                    <option value="expired">Expired</option>
+
+                                </select>
+                                {/* <input id='name' type="text" className="form-control text-capitalize" value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} /> */}
                             </div>
                             <div className="col-sm-6">
                                 <label htmlFor='name'>Description</label>
@@ -267,7 +277,7 @@ const Advertisement = () => {
                                 <div className='d-flex gap-5'>
                                     <select className='form-select' value={status} onChange={(e) => setStatus(e.target.value)}>
                                         <option value="requested">Requested</option>
-                                        <option value="approve">Approved</option>
+                                        <option value="approve">Approved Ad</option>
                                         <option value="declined">Declined</option>
                                         <option value="expired">Expired</option>
                                         <option value="live">Live</option>
@@ -308,7 +318,7 @@ const Advertisement = () => {
                                                             <td className='text-capitalize'>{cat?.accountName}</td>
                                                             <td className=' text-capitalize'>{cat?.spot}</td>
                                                             <td>{cat?.email}</td>
-                                                            <td className='text-capitalize'>{cat?.status}</td>
+                                                            <td className='text-capitalize'>{cat?.status === 'approve' ? 'Approved Ad' : cat?.status}</td>
                                                             <td className="text-end">
                                                                 <div className="d-flex justify-content-end gap-2">
                                                                     <button onClick={() => setAdData({ ...cat, startDate: formatDate(cat.startDate), endDate: formatDate(cat.endDate) })}

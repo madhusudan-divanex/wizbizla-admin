@@ -43,6 +43,8 @@ import BlogCategory from "../manual/BlogCategory";
 import Blog from "../manual/Blog";
 import NewsLetter from "../manual/NewsLetter";
 import GetAddReferences from "../manual/GetAddReference";
+import Chat from "../manual/Chat";
+import ChatData from "../manual/ChatData";
 
 export const router = createBrowserRouter([
     {
@@ -92,6 +94,14 @@ export const router = createBrowserRouter([
             {
                 path: "/add-on-services",
                 element: <ProtectedRoute component={AddOnList} />
+            },
+            {
+                path: "/chat",
+                element: <ProtectedRoute component={Chat} />
+            },
+            {
+                path: "/chat-data",
+                element: <ProtectedRoute component={ChatData} />
             },
             {
                 path: "/add-on-data",
