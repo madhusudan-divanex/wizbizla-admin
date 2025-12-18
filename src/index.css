@@ -3,8 +3,8 @@
     stroke-width: 0px;
 }
 .cht-usr-pic {
-   width: 60px;
-   height: 60px;
+   width: 50px;
+   height: 50px;
    object-fit: cover;
    border-radius: 50%;
    background: #C0C6DD;
@@ -15,4 +15,13 @@
   color: white !important;
   /* border-radius: 50%; */
   font-weight: bold;
+}
+.start-date {
+    background-color: #d1e7dd; /* green-ish for start */
+    font-weight: bold;
+}
+
+.end-date {
+    background-color: #fff3cd; /* yellow-ish for end */
+    font-weight: bold;
 }

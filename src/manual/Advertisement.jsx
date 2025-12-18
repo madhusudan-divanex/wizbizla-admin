@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FiCheckCircle, FiEye, FiTrash2, FiXCircle } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -15,6 +15,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
 const Advertisement = () => {
+    const [searchParams] = useSearchParams();
+    const listParam = searchParams.get('list');
     const [adList, setAdList] = useState([]);
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(1);
@@ -28,7 +30,7 @@ const Advertisement = () => {
     const fetchAds = async (pageNumber = page, searchQuery = search) => {
         try {
             const result = await getSecureApiData(
-                `ads?page=${pageNumber}&status=${status}`
+                `ads?page=${pageNumber}`
             );
 
             if (result.status) {
@@ -145,7 +147,11 @@ const Advertisement = () => {
             setAdData({ ...adData, image: file });
         };
     };
-
+    useEffect(() => {
+        if(listParam=='true'){
+            setAdData(null)
+        }
+    }, [listParam])
     return (
         <>
             <PageHeader>
@@ -182,86 +188,87 @@ const Advertisement = () => {
                             <label htmlFor='name'>Submit on </label>
                             <input id='name' type="text" className="form-control" value={new Date(adData?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })} disabled />
                         </div>
-                        <br/>
+                        <br />
                         <div className='col-sm-6'>
                             <label htmlFor='name'>Calendar</label>
-                                <Calendar
-                                    tileClassName={({ date }) => {
-                                        // check if date matches
-                                        const isOccupied = occupiedDates.some(
-                                            (d) => d.toDateString() === date.toDateString()
-                                        );
+                            <Calendar
+                                tileClassName={({ date }) => {
+                                    // check if date matches
+                                    const isOccupied = occupiedDates.some(
+                                        (d) => d.toDateString() === date.toDateString()
+                                    );
 
-                                        return isOccupied ? "occupied-date" : null;
-                                    }}
-                                />
+                                    return isOccupied ? "occupied-date" : null;
+                                }}
+                            />
                         </div>
                         {/* <div className="col-sm-6 d-flex flex-column">
                             <label htmlFor='name'>Image </label>
                             <img className='img-fluid' src={`${base_url}/${adData?.image}`} width={400} height={250} />
                             </div> */}
-                        {(adData?.status !== 'requested' && adData?.status !== 'declined') && <>
-                            <div className="col-sm-6">
-                                <label htmlFor='name'>Ad Image</label>
-                                <input type='file' className="form-control"
-                                    required={!adData?.image} onChange={handleImageChange} disabled={adData?.status !== 'approve'} />
-                                {adData?.image && <img
-                                    src={
-                                        adData?.image instanceof File
-                                            ? URL.createObjectURL(adData.image)
-                                            : `${base_url}/${adData?.image}`
-                                    }
-                                    alt="Ad Preview"
-                                    style={{ width: "220px", height: "120px", objectFit: "cover" }}
-                                />}
-                            </div>
+                        {(adData?.status !== 'declined') &&
+                            <>
+                                <div className="col-sm-6">
+                                    <label htmlFor='name'>Ad Image</label>
+                                    <input type='file' className="form-control"
+                                        required={!adData?.image} onChange={handleImageChange} disabled={adData?.status !== 'approve'} />
+                                    {adData?.image && <img
+                                        src={
+                                            adData?.image instanceof File
+                                                ? URL.createObjectURL(adData.image)
+                                                : `${base_url}/${adData?.image}`
+                                        }
+                                        alt="Ad Preview"
+                                        style={{ width: "220px", height: "120px", objectFit: "cover" }}
+                                    />}
+                                </div>
 
-                            <div className="col-sm-6 d-flex flex-column">
-                                <label htmlFor='name'>Start Date</label>
-                                <DatePicker
-                                    selected={adData.startDate}
-                                    onChange={date => setAdData({ ...adData, startDate: date })}
-                                    minDate={new Date()} // today
-                                    excludeDates={occupiedDates} // disable occupied dates
-                                    dateFormat="yyyy-MM-dd"
-                                    className="form-control"
-                                    disabled={adData.status !== "approve"}
-                                />
-                            </div>
-                            <div className="col-sm-6 d-flex flex-column">
-                                <label htmlFor='name'>End Date</label>
-                                <DatePicker
-                                    selected={adData.endDate}
-                                    onChange={date => setAdData({ ...adData, endDate: date })}
-                                    minDate={new Date()} // today
-                                    excludeDates={occupiedDates} // disable occupied dates
-                                    dateFormat="yyyy-MM-dd"
-                                    className="form-control"
-                                    disabled={adData.status !== "approve"}
-                                />
+                                <div className="col-sm-6">
+                                    <label htmlFor='name'>Amount</label>
+                                    <input type='number' className="form-control" required name='amount' value={adData?.amount} onChange={(e) => setAdData({ ...adData, amount: e.target.value })} disabled={adData?.status !== 'approve'} />
+                                </div>
+                                <div className="col-sm-6 d-flex flex-column">
+                                    <label htmlFor='name'>Start Date</label>
+                                    <DatePicker
+                                        selected={adData.startDate}
+                                        onChange={date => setAdData({ ...adData, startDate: date })}
+                                        minDate={new Date()} // today
+                                        excludeDates={occupiedDates} // disable occupied dates
+                                        dateFormat="yyyy-MM-dd"
+                                        className="form-control"
+                                        disabled={adData.status !== "approve"}
+                                    />
+                                </div>
+                                <div className="col-sm-6 d-flex flex-column">
+                                    <label htmlFor='name'>End Date</label>
+                                    <DatePicker
+                                        selected={adData.endDate}
+                                        onChange={date => setAdData({ ...adData, endDate: date })}
+                                        minDate={new Date()} // today
+                                        excludeDates={occupiedDates} // disable occupied dates
+                                        dateFormat="yyyy-MM-dd"
+                                        className="form-control"
+                                        disabled={adData.status !== "approve"}
+                                    />
 
-                            </div>
-                            <div className="col-sm-6">
-                                <label htmlFor='name'>Amount</label>
-                                <input type='number' className="form-control" required name='amount' value={adData?.amount} onChange={(e) => setAdData({ ...adData, amount: e.target.value })} disabled={adData?.status !== 'approve'} />
-                            </div>
-                            <div className="col-sm-6">
-                                <label htmlFor='name'>Status</label>
-                                <select className='form-select' value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} >
-                                    <option value="requested">Requested</option>
-                                    <option value="approve">Approved Ad</option>
-                                    <option value="live">Live</option>
-                                    <option value="declined">Declined</option>
-                                    <option value="expired">Expired</option>
+                                </div>
+                                <div className="col-sm-6">
+                                    <label htmlFor='name'>Status</label>
+                                    <select className='form-select' value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} >
+                                        <option value="requested">Requested</option>
+                                        <option value="approve">Approved Ad</option>
+                                        <option value="live">Live</option>
+                                        <option value="declined">Declined</option>
+                                        <option value="expired">Expired</option>
 
-                                </select>
-                                {/* <input id='name' type="text" className="form-control text-capitalize" value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} /> */}
-                            </div>
-                            <div className="col-sm-6">
-                                <label htmlFor='name'>Description</label>
-                                <textarea rows={10} id='name' type="text" className="form-control" value={adData?.detail} onChange={(e) => setAdData({ ...adData, description: e.target.value })} />
-                            </div>
-                        </>}
+                                    </select>
+                                    {/* <input id='name' type="text" className="form-control text-capitalize" value={adData?.status} onChange={(e) => setAdData({ ...adData, status: e.target.value })} /> */}
+                                </div>
+                                <div className="col-sm-6">
+                                    <label htmlFor='name'>Description</label>
+                                    <textarea rows={10} id='name' type="text" className="form-control" value={adData?.detail} onChange={(e) => setAdData({ ...adData, description: e.target.value })} />
+                                </div>
+                            </>}
                     </div>
                     <div className="d-flex justify-content-between">
                         <button onClick={() => setAdData(null)} className='btn btn-secondary'>Back</button>
@@ -275,7 +282,7 @@ const Advertisement = () => {
                             <div className="card-header">
                                 <h5 className="mb-0">Advertisement</h5>
                                 <div className='d-flex gap-5'>
-                                    <select className='form-select' value={status} onChange={(e) => setStatus(e.target.value)}>
+                                    {/* <select className='form-select' value={status} onChange={(e) => setStatus(e.target.value)}>
                                         <option value="requested">Requested</option>
                                         <option value="approve">Approved Ad</option>
                                         <option value="declined">Declined</option>
@@ -283,7 +290,7 @@ const Advertisement = () => {
                                         <option value="live">Live</option>
 
 
-                                    </select>
+                                    </select> */}
                                     {/* <input type='search' placeholder='search here...' value={search}
                                     onChange={handleSearchChange} /> */}
                                     <CSVLink

@@ -45,6 +45,9 @@ import NewsLetter from "../manual/NewsLetter";
 import GetAddReferences from "../manual/GetAddReference";
 import Chat from "../manual/Chat";
 import ChatData from "../manual/ChatData";
+import ScamType from "../manual/ScamType";
+import ServiceCategory from "../manual/ServiceCategory";
+import WelcomeBasket from "../manual/WelcomeBasket";
 
 export const router = createBrowserRouter([
     {
@@ -210,6 +213,18 @@ export const router = createBrowserRouter([
             {
                 path: "/cms/scam-tip",
                 element: <ProtectedRoute component={ScamTip} />
+            },
+            {
+                path: "/scam-type",
+                element: <ProtectedRoute component={ScamType} />
+            },
+            {
+                path: "/welcome-basket",
+                element: <ProtectedRoute component={WelcomeBasket} />
+            },
+            {
+                path: "/service-category",
+                element: <ProtectedRoute component={ServiceCategory} />
             },
              {
                 path: "/cms/faq",

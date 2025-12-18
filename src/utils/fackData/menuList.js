@@ -266,6 +266,18 @@ export const menuList = [
                 path: "/scam-report",
                 subdropdownMenu: false
             },
+            {
+                id: 2,
+                name: "Scam  Type",
+                path: "/scam-type",
+                subdropdownMenu: false
+            },
+            {
+                id: 3,
+                name: "Service Category",
+                path: "/service-category",
+                subdropdownMenu: false
+            },
             
         ]
     },
@@ -332,14 +344,14 @@ export const menuList = [
              {
                 id: 2,
                 name: "Requests",
-                path: "/advertisement",
+                path: "/advertisement?list=true",
                 subdropdownMenu: false
             },
         ]
      },
-      {
+    {
         id: 8,
-        name: "Welcome Baske",
+        name: "Welcome Basket",
         path: "#",
         icon: 'fa-basket',
         dropdownMenu: [
@@ -352,7 +364,7 @@ export const menuList = [
              {
                 id: 2,
                 name: "Requests",
-                path: "",
+                path: "/welcome-basket",
                 subdropdownMenu: false
             },
         ]
@@ -521,7 +533,7 @@ export const menuList = [
     },
     {
         id: 9,
-        name: "Categor",
+        name: "Category",
         path: "#",
         icon: 'fa-puzzel',
         dropdownMenu: [
