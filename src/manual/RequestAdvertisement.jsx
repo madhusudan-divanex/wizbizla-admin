@@ -14,7 +14,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
-const Advertisement = () => {
+const RequestAdvertisement = () => {
     const [searchParams] = useSearchParams();
     const listParam = searchParams.get('list');
     const [adList, setAdList] = useState([]);
@@ -30,7 +30,7 @@ const Advertisement = () => {
     const fetchAds = async (pageNumber = page, searchQuery = search) => {
         try {
             const result = await getSecureApiData(
-                `ads?page=${pageNumber}&status=approve`
+                `ads?page=${pageNumber}&status=requested`
             );
 
             if (result.status) {
@@ -168,18 +168,16 @@ const Advertisement = () => {
                     <div className="row mb-3">
                         <div className="col-sm-6">
                             <label htmlFor='name'>Account Name</label>
-                            <input id='name' type="text"
-                            disabled={adData?.status=='approve'}
-                             className="form-control" value={adData?.accountName} onChange={(e) => setAdData({ ...adData, accountName: e.target.value })} />
+                            <input id='name' type="text" className="form-control" value={adData?.accountName} onChange={(e) => setAdData({ ...adData, accountName: e.target.value })} />
 
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor='name'>Email</label>
-                            <input id='name' type="text" disabled={adData?.status=='approve'} className="form-control" value={adData?.email} onChange={(e) => setAdData({ ...adData, email: e.target.value })} />
+                            <input id='name' type="text" className="form-control" value={adData?.email} onChange={(e) => setAdData({ ...adData, email: e.target.value })} />
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor='name'>Spot</label>
-                            <select name="spot" value={adData?.spot} disabled={adData?.status=='approve'} onChange={(e) => setAdData({ ...adData, spot: e.target.value })} id="" className="form-select" required>
+                            <select name="spot" value={adData?.spot} onChange={(e) => setAdData({ ...adData, spot: e.target.value })} id="" className="form-select" required>
                                 <option value="">Select page</option>
                                 <option value="HomePageAccredited">Home Page Accredited</option>
                                 <option value="HomePage2">Home page 2</option>
@@ -190,11 +188,11 @@ const Advertisement = () => {
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor='name'>Contact Number</label>
-                            <input id='name' disabled={adData?.status=='approve'} type="text" className="form-control" value={adData?.contactNumber} onChange={(e) => setAdData({ ...adData, contactNumber: e.target.value })} />
+                            <input id='name' type="text" className="form-control" value={adData?.contactNumber} onChange={(e) => setAdData({ ...adData, contactNumber: e.target.value })} />
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor='name'>Submit on </label>
-                            <input id='name' disabled={adData?.status=='approve'} type="text" className="form-control" value={new Date(adData?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}  />
+                            <input id='name' type="text" className="form-control" value={new Date(adData?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })} disabled />
                         </div>
                         <br />
                         <div className='col-sm-6'>
@@ -219,7 +217,6 @@ const Advertisement = () => {
                                 <div className="col-sm-6">
                                     <label htmlFor='name'>Ad Image</label>
                                     <input type='file' className="form-control"
-                                    disabled={adData?.status=='approve'}
                                         required={!adData?.image} onChange={handleImageChange}  />
                                     {adData?.image && <img
                                         src={
@@ -235,7 +232,6 @@ const Advertisement = () => {
                                 <div className="col-sm-6">
                                     <label htmlFor='name'>Amount</label>
                                     <input type='number' className="form-control" required name='amount' 
-                                    disabled={adData?.status=='approve'}
                                     value={adData?.amount} onChange={(e) => setAdData({ ...adData, amount: e.target.value })} 
                                      />
                                 </div>
@@ -248,7 +244,7 @@ const Advertisement = () => {
                                         excludeDates={occupiedDates} // disable occupied dates
                                         dateFormat="yyyy-MM-dd"
                                         className="form-control"
-                                        disabled={adData?.status=='approve'}
+                                        // disabled={adData.status !== "approve"}
                                     />
                                 </div>
                                 <div className="col-sm-6 d-flex flex-column">
@@ -260,13 +256,13 @@ const Advertisement = () => {
                                         excludeDates={occupiedDates} // disable occupied dates
                                         dateFormat="yyyy-MM-dd"
                                         className="form-control"
-                                        disabled={adData?.status=='approve'}
+                                        // disabled={adData.status !== "approve"}
                                     />
+
                                 </div>
                                 <div className="col-sm-6">
                                     <label htmlFor='name'>Status</label>
                                     <select className='form-select' value={adData?.status} 
-                                    disabled={adData?.status=='approve'}
                                     onChange={(e) => setAdData({ ...adData, status: e.target.value })} >
                                         <option value="requested">Requested</option>
                                         <option value="approve">Approved Ad</option>
@@ -279,9 +275,7 @@ const Advertisement = () => {
                                 </div>
                                 <div className="col-sm-6">
                                     <label htmlFor='name'>Description</label>
-                                    <textarea rows={10} id='name' 
-                                    disabled={adData?.status=='approve'}
-                                    type="text" className="form-control" 
+                                    <textarea rows={10} id='name' type="text" className="form-control" 
                                     value={adData?.detail} onChange={(e) => setAdData({ ...adData, description: e.target.value })} />
                                 </div>
                             </>}
@@ -376,4 +370,4 @@ const Advertisement = () => {
     );
 };
 
-export default Advertisement;
+export default RequestAdvertisement;

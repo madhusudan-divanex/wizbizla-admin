@@ -269,6 +269,7 @@ const ScamReport = () => {
                                             <th scope="col">Name</th>
                                             <th scope="col">Scam Type</th>
                                             <th scope="col">Format</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col" className="text-end">Actions</th>
                                         </tr>
                                     </thead>
@@ -283,6 +284,7 @@ const ScamReport = () => {
                                                             <td>{cat?.name}</td>
                                                             <td>{cat?.scamType?.name}</td>
                                                             <td>{cat?.format}</td>
+                                                            <td className='text-capitalize'>{cat?.status}</td>
                                                             <td className="text-end">
                                                                 <div className="d-flex justify-content-end gap-2">
                                                                     <button onClick={() => handleEdit(cat)} className="btn btn-sm btn-light"><FiEye /></button>

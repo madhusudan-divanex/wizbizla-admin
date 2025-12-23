@@ -347,6 +347,12 @@ export const menuList = [
                 path: "/advertisement?list=true",
                 subdropdownMenu: false
             },
+            {
+                id: 3,
+                name: "Approve",
+                path: "/approved-advertisement?list=true",
+                subdropdownMenu: false
+            },
         ]
      },
     {
@@ -377,12 +383,18 @@ export const menuList = [
         dropdownMenu: [
             {
                 id: 1,
-                name: "References",
+                name: "Provider",
                 path: "/get-add-references",
                 subdropdownMenu: false
             },
-             {
+            {
                 id: 2,
+                name: "Consumer",
+                path: "/consumer-references",
+                subdropdownMenu: false
+            },
+             {
+                id: 3,
                 name: "Signature Profile References",
                 path: "/references",
                 subdropdownMenu: false

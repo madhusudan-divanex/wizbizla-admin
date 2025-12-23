@@ -48,6 +48,8 @@ import ChatData from "../manual/ChatData";
 import ScamType from "../manual/ScamType";
 import ServiceCategory from "../manual/ServiceCategory";
 import WelcomeBasket from "../manual/WelcomeBasket";
+import ConsumerReferences from "../manual/ConsumerReferences";
+import RequestAdvertisement from "../manual/RequestAdvertisement";
 
 export const router = createBrowserRouter([
     {
@@ -160,11 +162,19 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/advertisement",
+                element: <ProtectedRoute component={RequestAdvertisement} />
+            },
+            {
+                path: "/approved-advertisement",
                 element: <ProtectedRoute component={Advertisement} />
             },
             {
                 path: "/references",
                 element: <ProtectedRoute component={References} />
+            },
+            {
+                path: "/consumer-references",
+                element: <ProtectedRoute component={ConsumerReferences} />
             },
              {
                 path: "/get-add-references",

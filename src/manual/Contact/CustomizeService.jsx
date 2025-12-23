@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FiEye, FiTrash2 } from 'react-icons/fi';
+import { FiEye, FiTrash2, FiUser } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -210,7 +210,7 @@ const CustomizedService = () => {
                                                                 }
                                                                 className="btn btn-success col-4 text-white"
                                                             >
-                                                                View User
+                                                                <FiUser/>
                                                             </Link>
                                                         </td>
                                                     </tr>

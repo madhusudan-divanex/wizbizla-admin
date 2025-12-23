@@ -15,6 +15,7 @@ function AddOnData() {
         description: "",
         price: 0,
         type: "",
+        addonType:''
 
     })
     const navigate = useNavigate();
@@ -157,9 +158,19 @@ function AddOnData() {
                                             </select>
                                         </div>
                                         <div className="col-sm-6">
+                                            <label className="col-sm-2 col-form-label">Add on type</label>
+                                            <select className="form-select" name='addonType' value={values.addonType} required onChange={handleChange}>
+                                                <option value="">Select Type</option>
+                                                <option value="dispute">Dispute</option>
+                                                <option value="bespoke">Bespoke</option>
+                                                <option value="customize">Customized </option>
+                                            </select>
+                                        </div>
+                                        <div className="col-sm-6">
                                             <label className="col-sm-2 col-form-label">Description</label>
                                             <textarea rows={3} className="form-control" placeholder="" name='description' value={values.description} onChange={handleChange} />
                                         </div>
+                                        
                                     </div>
                                     <div className="text-end d-flex justify-content-end">
                                         <button type='submit' className="btn btn-primary">Save</button>

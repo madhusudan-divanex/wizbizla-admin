@@ -12,19 +12,20 @@ import PageHeader from '@/components/shared/pageHeader/PageHeader';
 import { CSVLink } from 'react-csv';
 
 const AllUsers = () => {
-    const [searchparam]=useSearchParams()
+    const [searchparam] = useSearchParams()
     const [userList, setUserList] = useState([]);
     const [page, setPage] = useState(1);
-    const val=searchparam.get('data')
+    const val = searchparam.get('data')
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [search, setSearch] = useState('');
-    const [data,setData]=useState('provider')
+    const [type,setType] =useState('consumer')
+    const [data, setData] = useState('provider')
 
     const fetchUsers = async (pageNumber = page, searchQuery = search) => {
         try {
             const result = await getSecureApiData(
-                `get-all-users?page=${pageNumber}&search=${encodeURIComponent(searchQuery)}`
+                `get-all-users?page=${pageNumber}&search=${encodeURIComponent(searchQuery)}&type=${type}`
             );
 
             if (result.status) {
@@ -44,12 +45,12 @@ const AllUsers = () => {
             fetchUsers();
         }, 500)
 
-    }, [page, search,data]);
-    useEffect(()=>{
-        if(val){
+    }, [page, search, data,type]);
+    useEffect(() => {
+        if (val) {
             setData(val)
         }
-    },[val])
+    }, [val])
 
     const handlePageChange = (pageNumber) => {
         if (pageNumber !== page) {
@@ -93,6 +94,11 @@ const AllUsers = () => {
                         <div className="card-header">
                             <h5 className="mb-0">Users</h5>
                             <div className='d-flex gap-5'>
+                                <select className='form-select' value={type} onChange={(e) => setType(e.target.value)}>
+                                    <option value="provider">Providers</option>
+                                    <option value="consumer">Users</option>
+
+                                </select>
                                 <input type='search' placeholder='search here...' value={search}
                                     onChange={handleSearchChange} />
                                 <CSVLink
@@ -130,7 +136,7 @@ const AllUsers = () => {
                                                         <td>{cat?.contactNumber}</td>
                                                         <td className="text-end">
                                                             <div className="d-flex justify-content-end gap-2">
-                                                                <Link to={cat?.onBoarding ? `/user/view/${cat._id}` : cat.role=='consumer'?`/consumer/detail/${cat._id}`: `/user/detail/${cat._id}`} className="btn btn-sm btn-light"><FiEye /></Link>
+                                                                <Link to={cat?.onBoarding ? `/user/view/${cat._id}` : cat.role == 'consumer' ? `/consumer/detail/${cat._id}` : `/user/detail/${cat._id}`} className="btn btn-sm btn-light"><FiEye /></Link>
                                                                 <button className="btn btn-sm btn-light text-danger" onClick={() => handleDelete(cat._id)}><FiTrash2 /></button>
                                                             </div>
                                                         </td>
