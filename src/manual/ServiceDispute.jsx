@@ -90,6 +90,7 @@ const ServiceDispute = () => {
         try {
             const result = await postApiData('dispute-action', data)
             if (result.success) {
+                fetchDisputes()
                 toast.success("Disput status is updated")
                 setIsScam(false)
             } else {
@@ -151,6 +152,8 @@ const ServiceDispute = () => {
                                 onChange={(e) => setDisputeData({ ...disputeData, status: e.target.value })}
                             >
                                 <option value="pending">Pending</option>
+                                <option value="approved">Approve</option>
+                            <option value="reject">Reject</option>
                                 <option value="resolved">Resolved</option>
                             </select>
                         </div>

@@ -144,6 +144,8 @@ const CustomizedService = () => {
                         <label htmlFor='name'>Status</label>
                         <select id='name' name='status' type="text" className="form-select" value={serviceData.status} onChange={(e) => setServiceData({ ...serviceData, status: e.target.value })}>
                             <option value="pending">Pending</option>
+                            <option value="approved">Approve</option>
+                            <option value="reject">Reject</option>
                             <option value="completed">Completed</option>
                             {/* <option value="cancel">Cancel</option> */}
                         </select>

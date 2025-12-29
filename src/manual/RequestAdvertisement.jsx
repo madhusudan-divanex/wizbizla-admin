@@ -52,7 +52,8 @@ const RequestAdvertisement = () => {
 
                 setOccupiedDates(dates);
             } else {
-                toast.error(result.message)
+                setOccupiedDates([])
+                // toast.error(result.message)
             }
         } catch (error) {
             console.log("Error fetching ads:", error);

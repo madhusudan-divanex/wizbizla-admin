@@ -52,7 +52,8 @@ const Advertisement = () => {
 
                 setOccupiedDates(dates);
             } else {
-                toast.error(result.message)
+                setOccupiedDates([])
+                // toast.error(result.message)
             }
         } catch (error) {
             console.log("Error fetching ads:", error);
@@ -105,6 +106,10 @@ const Advertisement = () => {
             toast.error('Start Date must be less then end date')
             return
         }
+        if (!adData?.startDate || !adData?.endDate) {
+            toast.error('Start and end date is required')
+            return
+        }
         const data = new FormData()
         data.append('adId', adData?._id)
         Object.entries(adData).forEach(([key, value]) => {
@@ -117,6 +122,7 @@ const Advertisement = () => {
                 fetchAds()
                 fetchOccupied()
                 setAdData(response.data)
+                setAdData(null)
                 toast.success("Ad data updated")
             } else {
                 toast.error(response.message)
