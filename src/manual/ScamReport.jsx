@@ -10,6 +10,7 @@ import base_url from '../baseUrl';
 import Footer from '@/components/shared/Footer';
 import PageHeader from '@/components/shared/pageHeader/PageHeader';
 import { CSVLink } from 'react-csv';
+import Loader from '../layout/Loader';
 
 const ScamReport = () => {
     const [isScam, setIsScam] = useState(false)
@@ -22,6 +23,7 @@ const ScamReport = () => {
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [search, setSearch] = useState('');
+    const [loading,setLoading] =useState(false)
 
     const fetchUsers = async (pageNumber = page, searchQuery = search) => {
         try {
@@ -84,6 +86,7 @@ const ScamReport = () => {
     }
     async function handleAction(id, status) {
         const data = { reportId: id, status }
+        setLoading(true)
         try {
             const result = await postApiData('report-action', data)
             if (result.success) {
@@ -93,6 +96,8 @@ const ScamReport = () => {
             }
         } catch (error) {
 
+        } finally{
+            setLoading(false)
         }
     }
     async function handlePostingAction() {
@@ -129,7 +134,8 @@ const ScamReport = () => {
             <PageHeader>
                 {/* <CustomersHeader /> */}
             </PageHeader>
-            {isScam ?
+            {loading?<Loader/>
+            :isScam ?
                 <div className='main-content'><div className="row mb-3">
                     <div className="col-sm-6">
                         <label htmlFor='name'>Title</label>

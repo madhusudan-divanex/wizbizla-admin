@@ -14,6 +14,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
+import Loader from '../layout/Loader';
 const RequestAdvertisement = () => {
     const [searchParams] = useSearchParams();
     const listParam = searchParams.get('list');
@@ -26,6 +27,7 @@ const RequestAdvertisement = () => {
     const [adData, setAdData] = useState(null)
     const [calendarDate, setCalanderDate] = useState()
     const [occupiedDates, setOccupiedDates] = useState([])
+    const [loading,setLoading] =useState(false)
 
     const fetchAds = async (pageNumber = page, searchQuery = search) => {
         try {
@@ -106,6 +108,7 @@ const RequestAdvertisement = () => {
             toast.error('Start Date must be less then end date')
             return
         }
+        setLoading(true)
         const data = new FormData()
         data.append('adId', adData?._id)
         Object.entries(adData).forEach(([key, value]) => {
@@ -117,13 +120,15 @@ const RequestAdvertisement = () => {
             if (response.status) {
                 fetchAds()
                 fetchOccupied()
-                setAdData(response.data)
+                setAdData(null)
                 toast.success("Ad data updated")
             } else {
                 toast.error(response.message)
             }
         } catch (error) {
 
+        } finally{
+            setLoading(false)
         }
     }
     const formatDate = (date) =>
@@ -164,7 +169,8 @@ const RequestAdvertisement = () => {
             <PageHeader>
                 {/* <CustomersHeader /> */}
             </PageHeader>
-            {adData ?
+            {loading? <Loader/>
+            : adData ?
                 <form onSubmit={handleAdSubmit} className='main-content'>
                     <div className="row mb-3">
                         <div className="col-sm-6">

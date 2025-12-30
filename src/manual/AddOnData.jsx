@@ -5,11 +5,13 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getSecureApiData, postApiData, updateApiData } from '../Services/api'
 import { toast } from 'react-toastify'
+import Loader from '../layout/Loader'
 
 function AddOnData() {
     const [searchParam] = useSearchParams()
     const [id, setId] = useState(null)
     const [isEdit,setIsEdit]=useState(false)
+    const [loading,setLoading] =useState(false)
     const [values, setValues] = useState({
         name: "",
         description: "",
@@ -72,6 +74,7 @@ function AddOnData() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         if(isEdit){
             const data={...values,addOnId:id}
             try {
@@ -85,6 +88,8 @@ function AddOnData() {
             } catch (error) {
                 console.log("error handle Submit data", error);
                 toast.error(error.response?.data?.message || "Server error");
+            } finally{
+                setLoading(false)
             }
         }else{
             try {
@@ -98,6 +103,8 @@ function AddOnData() {
             } catch (error) {
                 console.log("error handle Submit data", error);
                 toast.error(error.response?.data?.message || "Server error");
+            } finally{
+                setLoading(false)
             }
         }
     };
@@ -130,7 +137,8 @@ function AddOnData() {
             <PageHeader>
                 <CustomersCreateHeader />
             </PageHeader>
-            <div className='main-content'>
+            {loading?<Loader/>
+            :<div className='main-content'>
                 <div className='row'>
                     <div className="container mt-4">
                         <div className="card">
@@ -181,7 +189,7 @@ function AddOnData() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
         </>
     )
 }

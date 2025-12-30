@@ -47,9 +47,9 @@ const ServiceDispute = () => {
         }, 500)
 
     }, [page, search, format, scamType]);
-    useEffect(()=>{
+    useEffect(() => {
         setResolution(disputeData.resolution)
-    },[disputeData])
+    }, [disputeData])
 
     const handlePageChange = (pageNumber) => {
         if (pageNumber !== page) {
@@ -86,7 +86,7 @@ const ServiceDispute = () => {
         setIsScam(true)
     }
     async function handleAction(id) {
-        const data = { disputeId: id, status: disputeData.status, resolution }
+        const data = { disputeId: id, status: disputeData.status, resolution: disputeData.resolution }
         try {
             const result = await postApiData('dispute-action', data)
             if (result.success) {
@@ -121,7 +121,7 @@ const ServiceDispute = () => {
                 <div className='main-content'>
                     <div className="row mb-3">
 
-                        <Link style={{cursor:"pointer"}} to={`/user/detail/${disputeData?.against?._id}`} className="col-sm-6 ">
+                        <Link style={{ cursor: "pointer" }} to={`/user/detail/${disputeData?.against?._id}`} className="col-sm-6 ">
                             <label>Against</label>
                             <input type="text" className="form-control" value={disputeData?.against?.firstName} disabled />
                             {/* <Link to={`/user/detail/${disputeData?.against?._id}`} className='btn-sm btn-success mb-2'>View</Link> */}
@@ -152,8 +152,8 @@ const ServiceDispute = () => {
                                 onChange={(e) => setDisputeData({ ...disputeData, status: e.target.value })}
                             >
                                 <option value="pending">Pending</option>
-                                <option value="approved">Approve</option>
-                            <option value="reject">Reject</option>
+                                {/* <option value="approved">Approve</option> */}
+                                <option value="reject">Reject</option>
                                 <option value="resolved">Resolved</option>
                             </select>
                         </div>
@@ -163,9 +163,9 @@ const ServiceDispute = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                value={resolution}
+                                value={disputeData?.resolution}
                                 // disabled={!!disputeData?.resolution}
-                                onChange={(e) => setResolution(e.target.value)}
+                                onChange={(e) => setDisputeData({ ...disputeData, resolution: e.target.value })}
                             />
                         </div>
 
@@ -174,7 +174,7 @@ const ServiceDispute = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                value={disputeData?.createdAt ? new Date(disputeData.createdAt).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : ""}
+                                value={disputeData?.createdAt ? new Date(disputeData.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : ""}
                                 disabled
                             />
                         </div>
@@ -182,41 +182,52 @@ const ServiceDispute = () => {
                         <div className="col-sm-6 d-flex flex-column">
                             <label>Image</label>
                             {disputeData?.image && (
-                                <img
-                                    className="img-fluid"
-                                    src={`${base_url}/${disputeData.image}`}
-                                    width={400}
-                                    height={250}
-                                    alt="Dispute evidence"
-                                />
+                                disputeData.image.toLowerCase().endsWith(".pdf") ? (
+                                    <div>
+                                        <iframe
+                                            src={`${base_url}/${disputeData.image}`}
+                                            width="100%"
+                                            height="500px"
+                                            title="Dispute PDF"
+                                        />
+                                       
+                                    </div>
+                                ) : (
+                                    <img
+                                        className="img-fluid"
+                                        src={`${base_url}/${disputeData.image}`}
+                                        width={400}
+                                        height={250}
+                                        alt="Dispute evidence"
+                                    />
+                                )
                             )}
+
                         </div>
-                        {disputeData?.status!=='payment-pending' &&<>
-                        <h4>Service Detail</h4>
-                        <div className="col-sm-6">
-                            <label>Service Use</label>
-                            <input type="text" className="form-control" value={disputeData?.addOnId?.name} disabled />
-                        </div>
-                        <div className="col-sm-6">
-                            <label>Service Type</label>
-                            <input type="text" className="form-control" value={disputeData?.addOnId?.type} disabled />
-                        </div>
-                        <div className="col-sm-6">
-                            <label>Paid Price</label>
-                            <input type="text" className="form-control" value={disputeData?.addOnPrice} disabled />
-                        </div>
+                        {disputeData?.status !== 'payment-pending' && <>
+                            <h4>Service Detail</h4>
+                            <div className="col-sm-6">
+                                <label>Service Use</label>
+                                <input type="text" className="form-control" value={disputeData?.addOnId?.name} disabled />
+                            </div>
+                            <div className="col-sm-6">
+                                <label>Service Type</label>
+                                <input type="text" className="form-control" value={disputeData?.addOnId?.type} disabled />
+                            </div>
+                            <div className="col-sm-6">
+                                <label>Paid Price</label>
+                                <input type="text" className="form-control" value={disputeData?.addOnPrice} disabled />
+                            </div>
                         </>}
 
                     </div>
-
                     <div className="col-12 pb-5 d-flex justify-content-between">
                         <button onClick={() => setIsScam(false)} className='btn btn-secondary'>Back</button>
-
-                        {!disputeData?.resolution && (
-                            <button onClick={() => handleAction(disputeData._id)} className='btn btn-success'>
-                                Update
-                            </button>
-                        )}
+                        {/* {!disputeData?.resolution && ( */}
+                        <button onClick={() => handleAction(disputeData._id)} className='btn btn-success'>
+                            Update
+                        </button>
+                        {/* )} */}
                     </div>
                 </div>
 
@@ -227,7 +238,6 @@ const ServiceDispute = () => {
                             <div className="card-header">
                                 <h5 className="mb-0">Service Disputes</h5>
                                 <div className='d-flex gap-5'>
-
                                     <CSVLink
                                         data={formattedData}
                                         filename={"service-dispute.csv"}
@@ -245,7 +255,6 @@ const ServiceDispute = () => {
                                             <th scope="col">Type</th>
                                             <th scope="col">Subject</th>
                                             <th scope="col">Service Type</th>
-
                                             <th scope="col">Created At</th>
                                             <th scope="col">Status</th>
 
@@ -262,7 +271,7 @@ const ServiceDispute = () => {
                                                             <td>{cat?.type}</td>
                                                             <td>{cat?.subject}</td>
                                                             <td>{cat?.addOnId?.name}</td>
-                                                            <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
+                                                            <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
                                                             <td>{cat?.status}</td>
                                                             <td className="text-end">
                                                                 <div className="d-flex justify-content-end gap-2">

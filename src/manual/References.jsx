@@ -22,6 +22,7 @@ const References = () => {
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [search, setSearch] = useState('');
+    const [loading,setLoading] =useState(false)
 
     const fetchUsers = async (pageNumber = page, searchQuery = search) => {
         try {
@@ -83,6 +84,7 @@ const References = () => {
         setIsScam(true)
     }
     async function handleAction() {
+        setLoading(true)
         const data = { refId: refData._id, status:refData.status,comment:refData.comment }
         try {
             const result = await postApiData('trusted-reference-action', data)
@@ -94,6 +96,8 @@ const References = () => {
             }
         } catch (error) {
 
+        }finally{
+            setLoading(false)
         }
     }
     return (

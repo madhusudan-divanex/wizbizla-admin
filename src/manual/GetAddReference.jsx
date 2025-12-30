@@ -10,6 +10,7 @@ import base_url from '../baseUrl';
 import Footer from '@/components/shared/Footer';
 import PageHeader from '@/components/shared/pageHeader/PageHeader';
 import { CSVLink } from 'react-csv';
+import Loader from '../layout/Loader';
 
 const GetAddReferences = () => {
     const [isScam, setIsScam] = useState(false)
@@ -21,6 +22,7 @@ const GetAddReferences = () => {
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
+    const [loading,setLoading] =useState(false)
     const [search, setSearch] = useState('');
 
     const fetchUsers = async (pageNumber = page, searchQuery = search) => {
@@ -96,6 +98,7 @@ const GetAddReferences = () => {
         }
     }
     const updateStatus = async (referenceId, featureId, status) => {
+        setLoading(true)
         const data = { referenceId, featureId, status }
         try {
             const result = await postApiData(
@@ -111,6 +114,8 @@ const GetAddReferences = () => {
             }
         } catch (error) {
             console.log("Error fetching scams:", error);
+        } finally{
+            setLoading(false)
         }
     };
     return (
@@ -118,7 +123,8 @@ const GetAddReferences = () => {
             <PageHeader>
                 {/* <CustomersHeader /> */}
             </PageHeader>
-            {isScam ?
+            {loading?<Loader/>
+            :isScam ?
                 <div className='main-content'>
                     <div className="row mb-3" >
                         <div className="col-sm-6">

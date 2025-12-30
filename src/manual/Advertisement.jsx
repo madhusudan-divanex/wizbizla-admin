@@ -14,6 +14,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
+import Loader from '../layout/Loader';
 const Advertisement = () => {
     const [searchParams] = useSearchParams();
     const listParam = searchParams.get('list');
@@ -26,6 +27,7 @@ const Advertisement = () => {
     const [adData, setAdData] = useState(null)
     const [calendarDate, setCalanderDate] = useState()
     const [occupiedDates, setOccupiedDates] = useState([])
+    const [loading,setLoading] =useState(false)
 
     const fetchAds = async (pageNumber = page, searchQuery = search) => {
         try {
@@ -110,6 +112,7 @@ const Advertisement = () => {
             toast.error('Start and end date is required')
             return
         }
+        setLoading(true)
         const data = new FormData()
         data.append('adId', adData?._id)
         Object.entries(adData).forEach(([key, value]) => {
@@ -129,6 +132,8 @@ const Advertisement = () => {
             }
         } catch (error) {
 
+        } finally{
+            setLoading(false)
         }
     }
     const formatDate = (date) =>
@@ -169,7 +174,8 @@ const Advertisement = () => {
             <PageHeader>
                 {/* <CustomersHeader /> */}
             </PageHeader>
-            {adData ?
+            {loading?<Loader/>
+            : adData ?
                 <form onSubmit={handleAdSubmit} className='main-content'>
                     <div className="row mb-3">
                         <div className="col-sm-6">

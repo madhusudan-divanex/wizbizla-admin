@@ -10,6 +10,7 @@ import base_url from '../../baseUrl';
 import Footer from '@/components/shared/Footer';
 import PageHeader from '@/components/shared/pageHeader/PageHeader';
 import { CSVLink } from 'react-csv';
+import Loader from '../../layout/Loader';
 
 const CustomizedService = () => {
     const [serviceData, setServiceData] = useState(null)
@@ -18,7 +19,7 @@ const CustomizedService = () => {
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [search, setSearch] = useState('');
-
+    const [loading,setLoading] =useState(false)
     const fetchCustomers = async (pageNumber = page, searchQuery = search) => {
         try {
             const result = await getSecureApiData(
@@ -68,6 +69,7 @@ const CustomizedService = () => {
         updatedAt: item.updatedAt
     }));
     async function handleAction() {
+        setLoading(true)
         const data = { serviceId: serviceData._id, status: serviceData.status }
         try {
             const result = await postApiData('service-action', data)
@@ -80,6 +82,8 @@ const CustomizedService = () => {
             }
         } catch (error) {
 
+        } finally{
+            setLoading(false)
         }
     }
 
@@ -88,7 +92,7 @@ const CustomizedService = () => {
             <PageHeader>
                 {/* <CustomersHeader /> */}
             </PageHeader>
-            {serviceData ? <div className='main-content'>
+            {loading? <Loader/>: serviceData ? <div className='main-content'>
                 <div className="row mb-3">
 
                     <div className="col-sm-6">
