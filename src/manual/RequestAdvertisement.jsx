@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FiCheckCircle, FiEye, FiTrash2, FiXCircle } from 'react-icons/fi';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -16,6 +16,7 @@ import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
 import Loader from '../layout/Loader';
 const RequestAdvertisement = () => {
+    const navigate=useNavigate()
     const [searchParams] = useSearchParams();
     const listParam = searchParams.get('list');
     const [adList, setAdList] = useState([]);
@@ -120,7 +121,7 @@ const RequestAdvertisement = () => {
             if (response.status) {
                 fetchAds()
                 fetchOccupied()
-                setAdData(null)
+                navigate(`/approved-advertisement?list=true`)
                 toast.success("Ad data updated")
             } else {
                 toast.error(response.message)
