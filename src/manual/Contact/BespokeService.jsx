@@ -11,6 +11,7 @@ import Footer from '@/components/shared/Footer';
 import PageHeader from '@/components/shared/pageHeader/PageHeader';
 import { CSVLink } from 'react-csv';
 import Loader from '../../layout/Loader';
+import { Select, Spin } from "antd";
 
 const BespokeService = () => {
     const [serviceData, setServiceData] = useState(null)
@@ -19,7 +20,8 @@ const BespokeService = () => {
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [search, setSearch] = useState('');
-    const [loading,setLoading] =useState(false)
+    const [loading, setLoading] = useState(false)
+    const [matchProfile, setMatchProfile] = useState([])
 
     const fetchCustomers = async (pageNumber = page, searchQuery = search) => {
         try {
@@ -74,7 +76,7 @@ const BespokeService = () => {
     }));
     async function handleAction() {
         setLoading(true)
-        const data = { serviceId: serviceData._id, status: serviceData.status}
+        const data = { serviceId: serviceData._id, status: serviceData.status, providerId: serviceData.providerId }
         try {
             const result = await postApiData('service-action', data)
             if (result.success) {
@@ -85,17 +87,44 @@ const BespokeService = () => {
             }
         } catch (error) {
 
-        } finally{
+        } finally {
             setLoading(false)
         }
     }
+    const fetchUserProfile = async (searchText) => {
+        if (searchText.length < 2) {
+            setMatchProfile([]);
+            return;
+        }
+        try {
+            // setLoading(true);
+            const result = await getApiData(`api/users/search-profile/${searchText}?role=provider`);
+            if (result.success) {
+                setMatchProfile(result.profileUsers);
+            } else {
+                setMatchProfile([]);
+            }
+        } catch (error) {
+            console.error(error);
+            setMatchProfile([]);
+        } finally {
+            // setLoading(false);
+        }
+    };
+    const setConnectionValues = (values) => {
+        setServiceData((prevData) => ({
+            ...prevData,
+            providerId: values,
+        }));
+    };
+
 
     return (
         <>
             <PageHeader>
                 {/* <CustomersHeader /> */}
             </PageHeader>
-            {loading ? <Loader/> :serviceData ? <div className='main-content'>
+            {loading ? <Loader /> : serviceData ? <div className='main-content'>
                 <div className="row mb-3">
 
                     <div className="col-sm-6">
@@ -135,7 +164,7 @@ const BespokeService = () => {
 
                     <div className="col-sm-6">
                         <label>Price Range</label>
-                        <input type="text" className="form-control" value={serviceData?.priceRange?.minPrice +'-'+serviceData?.priceRange?.maxPrice ?? "N/A"} disabled />
+                        <input type="text" className="form-control" value={serviceData?.priceRange?.minPrice + '-' + serviceData?.priceRange?.maxPrice ?? "N/A"} disabled />
                     </div>
 
                     <div className="col-sm-6">
@@ -143,7 +172,7 @@ const BespokeService = () => {
                         <input
                             type="text"
                             className="form-control"
-                            value={serviceData?.serviceDate ? new Date(serviceData?.serviceDate).toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    }) : "N/A"}
+                            value={serviceData?.serviceDate ? new Date(serviceData?.serviceDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : "N/A"}
                             disabled
                         />
                     </div>
@@ -173,7 +202,7 @@ const BespokeService = () => {
                         <input
                             type="text"
                             className="form-control"
-                            value={new Date(serviceData?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}
+                            value={new Date(serviceData?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                             disabled
                         />
                     </div>
@@ -186,6 +215,24 @@ const BespokeService = () => {
                             <option value="completed">Completed</option>
                             {/* <option value="cancel">Cancel</option> */}
                         </select>
+                    </div>
+                    <div className='col-sm-6'>
+                        <label htmlFor='providerId'>Service Provider</label>
+                        <Select
+                            showSearch
+                            allowClear
+                            className="w-100 multi-service-select"
+                            placeholder="Search and select user"
+                            value={serviceData?.providerId}   // ✅ IDs here
+                            onChange={setConnectionValues}
+                            filterOption={false}
+                            onSearch={fetchUserProfile}
+                            // notFoundContent={loading ? <Spin size="small" /> : "No users found"}
+                            options={matchProfile.map((user) => ({
+                                label: `${user.firstName} ${user?.lastName}`, // ✅ display name
+                                value: user._id, // ✅ backend receives ID
+                            }))}
+                        />
                     </div>
 
                 </div>
@@ -239,10 +286,15 @@ const BespokeService = () => {
                                                         <td>{cat?.contactNumber}</td>
                                                         <td>{cat?.email}</td>
                                                         <td>{cat?.status}</td>
-                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
+                                                        <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
 
                                                         <td className='d-flex justify-content-between'>
-                                                            <button onClick={() => setServiceData(cat)} className="btn btn-sm btn-light"><FiEye /></button>
+                                                            <button onClick={() => {
+                                                                if (cat?.providerId) {
+                                                                    setMatchProfile([cat?.providerId])
+                                                                }
+                                                                setServiceData({...cat,providerId:cat?.providerId && cat?.providerId})
+                                                            }} className="btn btn-sm btn-light"><FiEye /></button>
                                                             <Link
                                                                 to={
                                                                     cat?.userId?.role === 'provider'
@@ -251,7 +303,7 @@ const BespokeService = () => {
                                                                 }
                                                                 className="btn btn-success col-4 text-white"
                                                             >
-                                                                <FiUser/>
+                                                                <FiUser />
                                                             </Link>
                                                         </td>
                                                     </tr>

@@ -210,7 +210,7 @@ function Blog() {
                                         uploadUrl: `${base_url}/upload/image`,
                                     },
                                     removePlugins: [
-                                        'MediaEmbed', 'ImageUpload', 'CodeBlock', 'EasyImage', 'ImageInsert'
+                                        'MediaEmbed',  'CodeBlock',
                                     ],
                                 }}
                             />
