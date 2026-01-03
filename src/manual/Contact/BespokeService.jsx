@@ -289,12 +289,28 @@ const BespokeService = () => {
                                                         <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
 
                                                         <td className='d-flex justify-content-between'>
-                                                            <button onClick={() => {
-                                                                if (cat?.providerId) {
-                                                                    setMatchProfile([cat?.providerId])
-                                                                }
-                                                                setServiceData({...cat,providerId:cat?.providerId && cat?.providerId})
-                                                            }} className="btn btn-sm btn-light"><FiEye /></button>
+                                                            <button
+                                                                onClick={() => {
+                                                                    if (cat?.providerId) {
+                                                                        setMatchProfile([
+                                                                            {
+                                                                                _id: cat.providerId._id,
+                                                                                firstName: cat.providerId.firstName,
+                                                                                lastName: cat.providerId.lastName,
+                                                                            },
+                                                                        ]);
+                                                                    }
+
+                                                                    setServiceData({
+                                                                        ...cat,
+                                                                        providerId: cat?.providerId?._id, // ✅ sirf ID
+                                                                    });
+                                                                }}
+                                                                className="btn btn-sm btn-light"
+                                                            >
+                                                                <FiEye />
+                                                            </button>
+
                                                             <Link
                                                                 to={
                                                                     cat?.userId?.role === 'provider'

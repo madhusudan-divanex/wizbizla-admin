@@ -71,7 +71,7 @@ const CustomizedService = () => {
     }));
     async function handleAction() {
         setLoading(true)
-        const data = { serviceId: serviceData._id, status: serviceData.status,providerId:serviceData.providerId }
+        const data = { serviceId: serviceData._id, status: serviceData.status, providerId: serviceData.providerId }
         try {
             const result = await postApiData('service-action', data)
             console.log("object", result)
@@ -181,7 +181,7 @@ const CustomizedService = () => {
                             {/* <option value="cancel">Cancel</option> */}
                         </select>
                     </div>
-                     <div className='col-sm-6'>
+                    <div className='col-sm-6'>
                         <label htmlFor='providerId'>Service Provider</label>
                         <Select
                             showSearch
@@ -252,7 +252,27 @@ const CustomizedService = () => {
                                                         <td>{cat?.status}</td>
                                                         <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
                                                         <td className='d-flex justify-content-center gap-3'>
-                                                            <button onClick={() => setServiceData(cat)} className="btn btn-sm btn-light"><FiEye /></button>
+                                                            <button
+                                                                onClick={() => {
+                                                                    if (cat?.providerId) {
+                                                                        setMatchProfile([
+                                                                            {
+                                                                                _id: cat.providerId._id,
+                                                                                firstName: cat.providerId.firstName,
+                                                                                lastName: cat.providerId.lastName,
+                                                                            },
+                                                                        ]);
+                                                                    }
+
+                                                                    setServiceData({
+                                                                        ...cat,
+                                                                        providerId: cat?.providerId?._id, // ✅ sirf ID
+                                                                    });
+                                                                }}
+                                                                className="btn btn-sm btn-light"
+                                                            >
+                                                                <FiEye />
+                                                            </button>
                                                             <Link
                                                                 to={
                                                                     cat?.userId?.role === 'provider'
