@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layout/root";
 import Home from "../pages/home";
@@ -50,6 +51,14 @@ import ServiceCategory from "../manual/ServiceCategory";
 import WelcomeBasket from "../manual/WelcomeBasket";
 import ConsumerReferences from "../manual/ConsumerReferences";
 import RequestAdvertisement from "../manual/RequestAdvertisement";
+import HomeBanner from "../manual/HomeBanner";
+import HomeBannerCreate from "../manual/HomeBannerCreate";
+import FindResources from "../manual/FindResources";
+import FindResourcesCreate from "../manual/FindResourcesCreate";
+import MarketGlance from "../manual/MarketGlance";
+import MarketGlanceCreate from "../manual/MarketGlanceCreate";
+import ExclusiveMemberships from "../manual/ExclusiveMemberships";
+import ExclusiveMembershipsCreate from "../manual/ExclusiveMembershipsCreate";
 
 export const router = createBrowserRouter([
     {
@@ -176,7 +185,7 @@ export const router = createBrowserRouter([
                 path: "/consumer-references",
                 element: <ProtectedRoute component={ConsumerReferences} />
             },
-             {
+            {
                 path: "/get-add-references",
                 element: <ProtectedRoute component={GetAddReferences} />
             },
@@ -236,7 +245,7 @@ export const router = createBrowserRouter([
                 path: "/service-category",
                 element: <ProtectedRoute component={ServiceCategory} />
             },
-             {
+            {
                 path: "/cms/faq",
                 element: <ProtectedRoute component={Faq} />
             },
@@ -247,6 +256,59 @@ export const router = createBrowserRouter([
             {
                 path: "/cms/blog",
                 element: <ProtectedRoute component={Blog} />
+            },
+            //shubham code
+            {
+                path: "/home-banner",
+                element: <ProtectedRoute component={HomeBanner} />
+            },
+            {
+                path: "/cms/home-banner",
+                element: <ProtectedRoute component={HomeBanner} />
+            },
+            {
+                path: "/cms/home-banner/:id",
+                element: <ProtectedRoute component={HomeBanner} />
+            },
+            {
+                path: "/cms/home-banner-create",
+                element: <ProtectedRoute component={HomeBannerCreate} />
+            },
+            {
+                path: "/cms/find-resources",
+                element: <ProtectedRoute component={FindResources} />
+            },
+            {
+                path: "/cms/find-resources/:id",
+                element: <ProtectedRoute component={FindResources} />
+            },
+            {
+                path: "/cms/find-resources-create",
+                element: <ProtectedRoute component={FindResourcesCreate} />
+            },
+            {
+                path: "/cms/market-glance",
+                element: <ProtectedRoute component={MarketGlance} />
+            },
+            {
+                path: "/cms/market-glance/:id",
+                element: <ProtectedRoute component={MarketGlance} />
+            },
+            {
+                path: "/cms/market-glance-create",
+                element: <ProtectedRoute component={MarketGlanceCreate} />
+            },
+            {
+                path: "/cms/exclusive-memberships",
+                element: <ProtectedRoute component={ExclusiveMemberships} />
+            },
+            {
+                path: "/cms/exclusive-memberships/:id",
+                element: <ProtectedRoute component={ExclusiveMemberships} />
+            },
+            {
+                path: "/cms/exclusive-memberships-create",
+                element: <ProtectedRoute component={ExclusiveMembershipsCreate} />
             },
         ]
 

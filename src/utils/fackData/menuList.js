@@ -119,7 +119,7 @@ export const menuList = [
                 path: "/user/provider?data=license",
                 subdropdownMenu: false
             },
-            
+
         ]
     },
     // {
@@ -170,7 +170,7 @@ export const menuList = [
     //             path: "/cms/blog",
     //             subdropdownMenu: false
     //         },
-            
+
     //     ]
     // },
     {
@@ -215,7 +215,7 @@ export const menuList = [
             //     path: "/sub-category",
             //     subdropdownMenu: false
             // },
-            
+
         ]
     },
     // {
@@ -236,7 +236,7 @@ export const menuList = [
     //             path: "/references",
     //             subdropdownMenu: false
     //         },
-            
+
     //     ]
     // },
     // {
@@ -251,7 +251,7 @@ export const menuList = [
     //             path: "/scam-report",
     //             subdropdownMenu: false
     //         },
-            
+
     //     ]
     // },
     {
@@ -278,7 +278,7 @@ export const menuList = [
                 path: "/service-category",
                 subdropdownMenu: false
             },
-            
+
         ]
     },
     {
@@ -301,7 +301,7 @@ export const menuList = [
             }
         ]
     },
-     {
+    {
         id: 2,
         name: "Service Request ",
         path: "#",
@@ -324,12 +324,12 @@ export const menuList = [
                 name: "Service Dispute",
                 path: "/service-dispute",
                 subdropdownMenu: false
-            },           
-            
-            
+            },
+
+
         ]
     },
-     {
+    {
         id: 7,
         name: "Advertisement",
         path: "#",
@@ -341,7 +341,7 @@ export const menuList = [
             //     path: "/references",
             //     subdropdownMenu: false
             // },
-             {
+            {
                 id: 2,
                 name: "Requests",
                 path: "/advertisement?list=true",
@@ -354,7 +354,7 @@ export const menuList = [
                 subdropdownMenu: false
             },
         ]
-     },
+    },
     {
         id: 8,
         name: "Welcome Basket",
@@ -367,15 +367,15 @@ export const menuList = [
             //     path: "/references",
             //     subdropdownMenu: false
             // },
-             {
+            {
                 id: 2,
                 name: "Requests",
                 path: "/welcome-basket",
                 subdropdownMenu: false
             },
         ]
-     },
-     {
+    },
+    {
         id: 8,
         name: "Reference",
         path: "#",
@@ -393,15 +393,15 @@ export const menuList = [
                 path: "/consumer-references",
                 subdropdownMenu: false
             },
-             {
+            {
                 id: 3,
                 name: "Signature Profile References",
                 path: "/references",
                 subdropdownMenu: false
             },
         ]
-     },
-     {
+    },
+    {
         id: 9,
         name: "Blog",
         path: "#",
@@ -413,15 +413,15 @@ export const menuList = [
                 path: "/cms/blog",
                 subdropdownMenu: false
             },
-             {
+            {
                 id: 2,
                 name: "Add New Blog",
                 path: "/cms/blog?create=true",
                 subdropdownMenu: false
             },
         ]
-     },
-     {
+    },
+    {
         id: 10,
         name: "Chat",
         path: "#",
@@ -434,8 +434,8 @@ export const menuList = [
                 subdropdownMenu: false
             },
         ]
-     },
-     {
+    },
+    {
         id: 10,
         name: "General Pages",
         path: "#",
@@ -447,7 +447,7 @@ export const menuList = [
                 path: "/cms/faq",
                 subdropdownMenu: false
             },
-             {
+            {
                 id: 2,
                 name: "Scam Tip",
                 path: "/cms/scam-tip",
@@ -471,15 +471,15 @@ export const menuList = [
                 path: "/user/deleted-user",
                 subdropdownMenu: false
             },
-             {
+            {
                 id: 7,
                 name: "Blog Category",
                 path: "/cms/blog-category",
                 subdropdownMenu: false
             },
         ]
-     },
-     {
+    },
+    {
         id: 7,
         name: "Contact ",
         path: "#",
@@ -509,13 +509,14 @@ export const menuList = [
                 path: "/concern",
                 subdropdownMenu: false
             },
-            
-            
+
+
         ]
     },
-    {id:3,
-        name:"Setting",
-        icon:'feather-setting'
+    {
+        id: 3,
+        name: "Setting",
+        icon: 'feather-setting'
     },
     {
         id: 8,
@@ -561,10 +562,64 @@ export const menuList = [
                 path: "/sub-category",
                 subdropdownMenu: false
             },
-           
-            
         ]
     },
-    
-    
+    //shubham code
+    {
+        id: 10,
+        name: "Frontend Management",
+        path: "#",
+        icon: 'fa-sliders-h',
+        dropdownMenu: [
+            {
+                id: 1,
+                name: "Add Home Banner",
+                path: "/cms/home-banner-create",
+                subdropdownMenu: false
+            },
+            {
+                id: 2,
+                name: "All Home Banner",
+                path: "/cms/home-banner",
+                subdropdownMenu: false
+            },
+            {
+                id: 3,
+                name: "Add Find Resources",
+                path: "/cms/find-resources-create",
+                subdropdownMenu: false
+            },
+            {
+                id: 4,
+                name: "All Find Resources",
+                path: "/cms/find-resources",
+                subdropdownMenu: false
+            },
+            {
+                id: 5,
+                name: "Add Market Glance",
+                path: "/cms/market-glance-create",
+                subdropdownMenu: false
+            },
+            {
+                id: 6,
+                name: "All Market Glance",
+                path: "/cms/market-glance",
+                subdropdownMenu: false
+            },
+            {
+                id: 7,
+                name: "Add Exclusive Memberships",
+                path: "/cms/exclusive-memberships-create",
+                subdropdownMenu: false
+            },
+            {
+                id: 8,
+                name: "All Exclusive Memberships",
+                path: "/cms/exclusive-memberships",
+                subdropdownMenu: false
+            }
+        ]
+    }
+
 ]

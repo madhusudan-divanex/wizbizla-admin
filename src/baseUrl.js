@@ -1,7 +1,7 @@
-const base_url='https://api.wizbizlaonboard.com'
+const base_url = 'https://api.wizbizlaonboard.com'
 
-// http://localhost:9111
-
+// 
+// https://api.wizbizlaonboard.com
 // https://api.wizbizlaonboard.com
 
 

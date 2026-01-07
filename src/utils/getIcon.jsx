@@ -1,8 +1,8 @@
 
 import { BsEnvelope, BsEnvelopeCheck, BsEnvelopeHeart, BsEnvelopeOpen, BsEnvelopePlus, BsEnvelopeSlash } from "react-icons/bs";
-import { FaAdversal, FaBasketShopping, FaBlogger, FaBriefcase, FaBuilding, FaCakeCandles, FaCcMastercard, FaCcPaypal, FaCcVisa, FaChrome, FaEdge, FaFacebook, FaFirefoxBrowser, FaHandsPraying, FaHouse, FaHouseUser, FaInternetExplorer, FaLinkedin, FaLock, FaM, FaOctopusDeploy, FaOpera, FaPlane, FaPuzzlePiece, FaRocketchat, FaSafari, FaTwitter, FaUmbrellaBeach, FaUsers, FaWordpressSimple, FaWpforms, FaYoutube } from "react-icons/fa6";
+import { FaAdversal, FaBasketShopping, FaBlogger, FaBriefcase, FaBuilding, FaCakeCandles, FaCcMastercard, FaCcPaypal, FaCcVisa, FaChrome, FaEdge, FaFacebook, FaFirefoxBrowser, FaHandsPraying, FaHouse, FaHouseUser, FaInternetExplorer, FaLinkedin, FaLock, FaM, FaOctopusDeploy, FaOpera, FaPlane, FaPuzzlePiece, FaRocketchat, FaSafari, FaSliders, FaTwitter, FaUmbrellaBeach, FaUsers, FaWordpressSimple, FaWpforms, FaYoutube } from "react-icons/fa6";
 import { FiActivity, FiAirplay, FiAlertCircle, FiArchive, FiArrowDown, FiArrowUp, FiAtSign, FiAward, FiBarChart2, FiBell, FiBellOff, FiBluetooth, FiBriefcase, FiCast, FiCheck, FiCheckCircle, FiChrome, FiClipboard, FiClock, FiCompass, FiCopy, FiCrosshair, FiDelete, FiDollarSign, FiEdit, FiEye, FiFacebook, FiFigma, FiFileText, FiFramer, FiGitBranch, FiGitCommit, FiGithub, FiGitlab, FiGlobe, FiGrid, FiHeadphones, FiHelpCircle, FiInstagram, FiLayers, FiLayout, FiLifeBuoy, FiLink, FiLink2, FiLinkedin, FiList, FiLock, FiLogIn, FiMail, FiMapPin, FiMessageSquare, FiMonitor, FiMoon, FiPause, FiPhone, FiPieChart, FiPlusSquare, FiPower, FiRepeat, FiSearch, FiSend, FiSettings, FiShield, FiShoppingBag, FiShoppingCart, FiSliders, FiSmartphone, FiStar, FiSun, FiSunrise, FiSunset, FiTablet, FiTag, FiTrash2, FiTwitter, FiType, FiUmbrella, FiUser, FiUserCheck, FiUserMinus, FiUserPlus, FiUsers, FiX, FiYoutube } from "react-icons/fi";
-import { RiAdvertisementLine, RiVipCrown2Line  } from "react-icons/ri";
+import { RiAdvertisementLine, RiVipCrown2Line } from "react-icons/ri";
 import { GiThreeFriends } from "react-icons/gi";
 import { MdOutlineReportGmailerrorred, MdReportGmailerrorred } from "react-icons/md";
 const getIcon = (name) => {
@@ -187,7 +187,7 @@ const getIcon = (name) => {
         case "fa-form":
             return <FaWpforms />
         case "fa-vip":
-            return <RiVipCrown2Line  /> 
+            return <RiVipCrown2Line />
         case "fa-chrome":
             return <FaChrome />
         case "fa-firefox-browser":
@@ -229,12 +229,13 @@ const getIcon = (name) => {
         case "fa-umbrella-beach":
             return <FaUmbrellaBeach />
         case "fa-building":
-            return <FaBuilding/>
+            return <FaBuilding />
         case "fa-birthday-cake":
             return <FaCakeCandles />
         case "fa-puzzel":
             return <FaPuzzlePiece />
-
+        case "fa-sliders-h":
+            return <FaSliders />
 
 
         case "bi-envelope":
@@ -250,7 +251,7 @@ const getIcon = (name) => {
         case "bi-envelope-slash":
             return <BsEnvelopeSlash />
         case "fa-scam":
-            return <MdOutlineReportGmailerrorred style={{strokeWidth:'0px'}}/>
+            return <MdOutlineReportGmailerrorred style={{ strokeWidth: '0px' }} />
         case "fa-contact":
             return <FiHeadphones />
         case "fa-ad":

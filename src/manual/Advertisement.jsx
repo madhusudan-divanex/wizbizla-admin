@@ -209,7 +209,7 @@ const Advertisement = () => {
                             <input id='name' disabled={adData?.status=='approve'} type="text" className="form-control" value={new Date(adData?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}  />
                         </div>
                         <br />
-                        <div className='col-sm-6'>
+                        {adData?.spot!=='HomePageAccredited'&&<div className='col-sm-6'>
                             <label htmlFor='name'>Calendar</label>
                             <Calendar
                                 tileClassName={({ date }) => {
@@ -221,7 +221,7 @@ const Advertisement = () => {
                                     return isOccupied ? "occupied-date" : null;
                                 }}
                             />
-                        </div>
+                        </div>}
                         {/* <div className="col-sm-6 d-flex flex-column">
                             <label htmlFor='name'>Image </label>
                             <img className='img-fluid' src={`${base_url}/${adData?.image}`} width={400} height={250} />
@@ -257,7 +257,7 @@ const Advertisement = () => {
                                         selected={adData.startDate}
                                         onChange={date => setAdData({ ...adData, startDate: date })}
                                         minDate={new Date()} // today
-                                        excludeDates={occupiedDates} // disable occupied dates
+                                        excludeDates={adData?.spot!=='HomePageAccredited'&&occupiedDates} // disable occupied dates
                                         dateFormat="yyyy-MM-dd"
                                         className="form-control"
                                         disabled={adData?.status=='approve'}
@@ -269,7 +269,7 @@ const Advertisement = () => {
                                         selected={adData.endDate}
                                         onChange={date => setAdData({ ...adData, endDate: date })}
                                         minDate={new Date()} // today
-                                        excludeDates={occupiedDates} // disable occupied dates
+                                        excludeDates={adData?.spot!=='HomePageAccredited'&&occupiedDates} // disable occupied dates
                                         dateFormat="yyyy-MM-dd"
                                         className="form-control"
                                         disabled={adData?.status=='approve'}

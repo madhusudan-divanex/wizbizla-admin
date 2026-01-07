@@ -29,29 +29,30 @@ const Menus = () => {
     };
 
     useEffect(() => {
-    if (pathName) {
-        const matchedMainItem = menuList.find((item) => {
-            if (!Array.isArray(item.dropdownMenu)) {
-                return item.path === pathName;
-            } else {
-                return item.dropdownMenu.some((sub) => sub.path === pathName);
-            }
-        });
+        if (pathName) {
+            const matchedMainItem = menuList.find((item) => {
+                if (!Array.isArray(item.dropdownMenu)) {
+                    return item.path === pathName;
+                } else {
+                    return item.dropdownMenu.some((sub) => sub.path === pathName);
+                }
+            });
 
-        if (matchedMainItem) {
-            setActiveParent(matchedMainItem.name);
+            if (matchedMainItem) {
+                setActiveParent(matchedMainItem.name);
 
-            const matchedSub = matchedMainItem.dropdownMenu?.find(sub => sub.path === pathName);
-            if (matchedSub) {
-                setActiveChild(matchedSub.name);
-                setOpenDropdown(matchedMainItem.name);
-            } else {
-                setActiveChild("");
-                setOpenDropdown(null);
+                const matchedSub = matchedMainItem.dropdownMenu?.find(sub => sub.path === pathName);
+                if (matchedSub) {
+                    setActiveChild(matchedSub.name);
+                    // do not auto open dropdown; keep arrow right
+                    setOpenDropdown(null);
+                } else {
+                    setActiveChild("");
+                    setOpenDropdown(null);
+                }
             }
         }
-    }
-}, [pathName]);
+    }, [pathName]);
 
 
     return (
@@ -66,7 +67,7 @@ const Menus = () => {
                         onClick={(e) => {
                             if (isDropdown) handleMainMenu(e, name);
                         }}
-                        className={`nxl-item ${isDropdown ? "nxl-hasmenu" : ""} ${isActive ? "active nxl-trigger" : ""}`}
+                        className={`nxl-item ${isDropdown ? "nxl-hasmenu" : ""} ${isActive ? "active" : ""} ${openDropdown === name ? "nxl-trigger" : ""}`}
                     >
                         <Link to={path} className="nxl-link text-capitalize">
                             <span className="nxl-micon"> {getIcon(icon)} </span>
