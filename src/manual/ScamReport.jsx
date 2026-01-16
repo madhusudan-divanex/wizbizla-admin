@@ -88,8 +88,9 @@ const ScamReport = () => {
         const data = { reportId: id, status }
         setLoading(true)
         try {
-            const result = await postApiData('report-action', data)
+            const result = await postApiData('scam-report-action', data)
             if (result.success) {
+                fetchUsers()
                 toast.success("Report status is updated")
             } else {
                 toast.error(result.message)

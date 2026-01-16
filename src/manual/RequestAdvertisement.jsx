@@ -284,7 +284,7 @@ const RequestAdvertisement = () => {
                                 <div className="col-sm-6">
                                     <label htmlFor='name'>Description</label>
                                     <textarea rows={10} id='name' type="text" className="form-control" 
-                                    value={adData?.detail} onChange={(e) => setAdData({ ...adData, description: e.target.value })} />
+                                    value={adData?.detail} onChange={(e) => setAdData({ ...adData, detail: e.target.value })} />
                                 </div>
                             </>}
                     </div>

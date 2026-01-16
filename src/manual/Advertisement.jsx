@@ -294,7 +294,7 @@ const Advertisement = () => {
                                     <textarea rows={10} id='name' 
                                     disabled={adData?.status=='approve'}
                                     type="text" className="form-control" 
-                                    value={adData?.detail} onChange={(e) => setAdData({ ...adData, description: e.target.value })} />
+                                    value={adData?.detail} onChange={(e) => setAdData({ ...adData, detail: e.target.value })} />
                                 </div>
                             </>}
                     </div>

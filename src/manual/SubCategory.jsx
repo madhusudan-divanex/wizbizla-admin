@@ -13,8 +13,9 @@ import base_url from '../baseUrl';
 
 function SubCategory() {
     const [isSub, setIsSub] = useState(false)
-    const [name,setName]=useState('')
-    const [isEdit,setIsEdit]=useState(null)
+    const [name, setName] = useState('')
+    const [icon, setIcon] = useState(null)
+    const [isEdit, setIsEdit] = useState(null)
     const [subCategoryList, setSubCategoryList] = useState([]);
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(1);
@@ -58,10 +59,15 @@ function SubCategory() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const formData=new FormData()
+        formData.append("name",name)
+        if(icon instanceof File){
+            formData.append("icon",icon)
+        }
         if (isEdit) {
-            const data={name,subCatId:isEdit}
+            formData.append("subCatId",isEdit)
             try {
-                const result = await updateApiData('update-subcategory', data)
+                const result = await updateApiData('update-subcategory', formData)
                 if (result.status) {
                     toast.success("Category updated successfully");
                     setIsEdit(false)
@@ -76,11 +82,11 @@ function SubCategory() {
             }
         } else {
             try {
-                const result = await postApiData('create-subcategory', {name})
+                const result = await postApiData('create-subcategory',formData)
                 if (result.status) {
                     toast.success("Sub Category created successfully");
-                   setIsEdit(false)
-                   fetchSubCategory()
+                    setIsEdit(false)
+                    fetchSubCategory()
                     setIsSub(false)
                 } else {
                     toast.error(result.message || "adding failed");
@@ -131,11 +137,31 @@ function SubCategory() {
                                         <div className="row mb-3">
                                             <div className="col-sm-12">
                                                 <label htmlFor='name' className="col-sm-2 col-form-label">Name</label>
-                                                <input type="text" className="form-control" placeholder="Name" required name='name' value={name} onChange={(e)=>setName(e.target.value)} />
+                                                <input type="text" className="form-control" placeholder="Name" required name='name' value={name} onChange={(e) => setName(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <div className="col-sm-12">
+                                                <label htmlFor='name' className="col-sm-2 col-form-label">Icon</label>
+                                                <input type="file" className="form-control" accept="image/*"
+                                                    required name='icon' onChange={(e) => setIcon(e.target.files[0])} />
+                                                {icon instanceof File ? (
+                                                    <img
+                                                        src={URL.createObjectURL(icon)}
+                                                        alt="Preview"
+                                                        style={{ width: "100px", marginTop: "10px" }}
+                                                    />
+                                                ):
+                                                <img
+                                                        src={`${base_url}/${icon}`}
+                                                        alt="Preview"
+                                                        style={{ width: "100px", marginTop: "10px" }}
+                                                    />
+                                                }
                                             </div>
                                         </div>
                                         <div className="text-end d-flex justify-content-between">
-                                            <button onClick={()=>setIsSub(false)}  className="btn btn-secondary">Back</button>
+                                            <button onClick={() => setIsSub(false)} className="btn btn-secondary">Back</button>
                                             <button type='submit' className="btn btn-primary">Save</button>
                                         </div>
                                     </form>
@@ -153,8 +179,10 @@ function SubCategory() {
                                     <div>
                                         {/* <input type='search' placeholder='search here...' value={search}
                                         onChange={handleSearchChange} /> */}
-                                        <button onClick={() => {setName('')
-                                            setIsSub(true)}} className='btn btn-primary'>Create</button>
+                                        <button onClick={() => {
+                                            setName('')
+                                            setIsSub(true)
+                                        }} className='btn btn-primary'>Create</button>
                                     </div>
                                 </div>
                                 <div className="card-body table-responsive">
@@ -163,6 +191,7 @@ function SubCategory() {
                                             <tr>
                                                 <th scope="col"> S.No. </th>
                                                 <th scope="col">Name</th>
+                                                <th scope="col">Icon</th>
                                                 <th scope="col">Last Update</th>
                                                 <th scope="col" >Actions</th>
                                             </tr>
@@ -175,13 +204,16 @@ function SubCategory() {
                                                             <tr key={item._id}>
                                                                 <td>{(page - 1) * 10 + index + 1}</td>
                                                                 <td>{item.name}</td>
-                                                                <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
+                                                                <td><img width={100} height={50} src={`${base_url}/${item?.icon}`} /></td>
+                                                                <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
                                                                 <td >
                                                                     <div className="d-flex justify-content-start gap-2">
-                                                                        <button onClick={()=>{
+                                                                        <button onClick={() => {
                                                                             setIsEdit(item._id)
                                                                             setName(item?.name)
-                                                                            setIsSub(true)}}  className="btn btn-sm btn-light"><FiEye /></button>
+                                                                            setIcon(item?.icon)
+                                                                            setIsSub(true)
+                                                                        }} className="btn btn-sm btn-light"><FiEye /></button>
                                                                         <button className="btn btn-sm btn-light text-danger" onClick={() => handleDelete(item._id)}><FiTrash2 /></button>
                                                                     </div>
                                                                 </td>
@@ -197,11 +229,11 @@ function SubCategory() {
                                         </tbody>
                                     </table>
                                     <div className="d-flex justify-content-between align-items-center p-2">
-                                    <div className="text-muted">
-                                        Showing {(page - 1) * 10 + 1} to {Math.min(page * 10, total)} of {total} entries
+                                        <div className="text-muted">
+                                            Showing {(page - 1) * 10 + 1} to {Math.min(page * 10, total)} of {total} entries
+                                        </div>
+                                        <Pagination page={page} pages={pages} onPageChange={handlePageChange} />
                                     </div>
-                                    <Pagination page={page} pages={pages} onPageChange={handlePageChange} />
-                                </div>
                                 </div>
                             </div>
                         </div>

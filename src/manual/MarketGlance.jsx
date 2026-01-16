@@ -242,7 +242,7 @@ const MarketGlance = () => {
                                                 </div>
                                                 <div className="col-md-4">
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         className="form-control"
                                                         placeholder="Value"
                                                         value={ctr.value}
