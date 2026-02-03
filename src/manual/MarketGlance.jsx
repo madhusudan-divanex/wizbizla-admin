@@ -95,7 +95,7 @@ const MarketGlance = () => {
                     .filter((c) => c.label && c.value !== "")
                     .map((c) => ({
                         label: c.label,
-                        value: Number(c.value),
+                        value: c.value,
                     })),
                 note: form.note,
             };

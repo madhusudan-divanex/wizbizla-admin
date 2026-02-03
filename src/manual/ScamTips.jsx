@@ -26,7 +26,7 @@ function ScamTip() {
         image: null,
         previewImage: null,
         isFeatured: false,
-        link: ''
+        link: '',dataType:'alert'
     })
 
     const fetchTip = async (pageNumber = page, searchQuery = search) => {
@@ -94,6 +94,7 @@ function ScamTip() {
         dataToSubmit.append('type', form.type);
         dataToSubmit.append('isFeatured', form.isFeatured);
         dataToSubmit.append('link', form.link);
+        dataToSubmit.append('dataType',form.dataType)
         if (form.image) {
             dataToSubmit.append('image', form.image);
         }
@@ -192,6 +193,19 @@ function ScamTip() {
                                 <option value="book">Book</option>
                                 <option value="youtube">YouTube</option>
                                 <option value="instagram">Instagram</option>
+                            </select>
+                        </div>
+                        <div className="col-sm-6">
+                            <label>Type</label>
+                            <select
+                                className="form-control"
+                                name="dataType"
+                                value={form.dataType}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select Type</option>
+                                <option value="alert">Alert</option>
+                                <option value="tip">Tip</option>
                             </select>
                         </div>
 
@@ -293,8 +307,8 @@ function ScamTip() {
                                                             <tr key={item._id}>
                                                                 <td>{(page - 1) * 10 + index + 1}</td>
                                                                 <td>{item.title}</td>
-                                                                <td>
-                                                                    {item?.type}
+                                                                <td className='text-capitalize'>
+                                                                    {item?.dataType}
                                                                 </td>
 
                                                                 <td><img width={100} height={50} src={`${base_url}/${item?.image}`} /></td>

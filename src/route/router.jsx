@@ -59,6 +59,8 @@ import MarketGlance from "../manual/MarketGlance";
 import MarketGlanceCreate from "../manual/MarketGlanceCreate";
 import ExclusiveMemberships from "../manual/ExclusiveMemberships";
 import ExclusiveMembershipsCreate from "../manual/ExclusiveMembershipsCreate";
+import HomeTitle from "../manual/HomeTitle";
+import Transactions from "../manual/Transactions";
 
 export const router = createBrowserRouter([
     {
@@ -309,6 +311,14 @@ export const router = createBrowserRouter([
             {
                 path: "/cms/exclusive-memberships-create",
                 element: <ProtectedRoute component={ExclusiveMembershipsCreate} />
+            },
+            {
+                path: "/cms/home-title",
+                element: <ProtectedRoute component={HomeTitle} />
+            },
+            {
+                path: "/transactions",
+                element: <ProtectedRoute component={Transactions} />
             },
         ]
 

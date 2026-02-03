@@ -14,7 +14,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 function Blog() {
-    const [searchParams]=useSearchParams()
+    const [searchParams] = useSearchParams()
     const [blogData, setBlogData] = useState(null);
     const [blogList, setBlogList] = useState([]);
     const [page, setPage] = useState(1);
@@ -27,6 +27,7 @@ function Blog() {
         description: "",
         catId: "",
         image: null,
+        link: "",
         previewImage: null,
     })
 
@@ -64,10 +65,10 @@ function Blog() {
         }
     }
     useEffect(() => {
-  if (searchParams.get('create')) {
-    setBlogData(true);
-  }
-}, [searchParams.get('create')]);
+        if (searchParams.get('create')) {
+            setBlogData(true);
+        }
+    }, [searchParams.get('create')]);
     useEffect(() => {
         fetchBlog();
     }, [page, search]);
@@ -111,6 +112,7 @@ function Blog() {
         dataToSubmit.append('title', form.title);
         dataToSubmit.append('description', form.description);
         dataToSubmit.append('catId', form.catId);
+        dataToSubmit.append('link',form.link)
         if (form.image) {
             dataToSubmit.append('image', form.image);
         }
@@ -188,6 +190,16 @@ function Blog() {
                                 {categoryList?.map((item, key) => <option key={key} value={item?._id}>{item?.name}</option>)}
                             </select>
                         </div>
+                        <div className="col-sm-12">
+                            <label>Link</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="link"
+                                value={form.link}
+                                onChange={handleChange}
+                            />
+                        </div>
 
                         <div className="col-sm-12">
                             <label>Description</label>
@@ -210,7 +222,7 @@ function Blog() {
                                         uploadUrl: `${base_url}/upload/image`,
                                     },
                                     removePlugins: [
-                                        'MediaEmbed',  'CodeBlock',
+                                        'MediaEmbed', 'CodeBlock',
                                     ],
                                 }}
                             />
@@ -306,7 +318,7 @@ function Blog() {
                                                                 </td>
 
                                                                 <td><img width={100} height={50} src={`${base_url}/${item?.image}`} /></td>
-                                                                <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', {                                                                                       day: '2-digit',                                                                                        month: '2-digit',                                                                                        year: 'numeric'                                                                                    })}</td>
+                                                                <td>{new Date(item?.updatedAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
                                                                 <td >
                                                                     <div className="d-flex justify-content-start gap-2">
                                                                         <button onClick={() => {

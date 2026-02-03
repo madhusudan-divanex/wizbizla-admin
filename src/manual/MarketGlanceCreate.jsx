@@ -36,7 +36,7 @@ const MarketGlanceCreate = () => {
         title: form.title,
         counters: form.counters
           .filter((c) => c.label && c.value !== "")
-          .map((c) => ({ label: c.label, value: Number(c.value) })),
+          .map((c) => ({ label: c.label, value: c.value })),
         note: form.note,
       };
       const res = await postApiData("cms/create-market-glance", payload);

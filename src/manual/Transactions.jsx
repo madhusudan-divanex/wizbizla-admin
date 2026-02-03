@@ -11,7 +11,7 @@ import Footer from '@/components/shared/Footer';
 import PageHeader from '@/components/shared/pageHeader/PageHeader';
 import { CSVLink } from 'react-csv';
 
-const AllUsers = () => {
+const Transactions = () => {
     const [searchparam] = useSearchParams()
     const [userList, setUserList] = useState([]);
     const [page, setPage] = useState(1);
@@ -19,20 +19,20 @@ const AllUsers = () => {
     const [pages, setPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [search, setSearch] = useState('');
-    const [type,setType] =useState('consumer')
+    const [type,setType] =useState('')
     const [data, setData] = useState('provider')
 
     const fetchUsers = async (pageNumber = page, searchQuery = search) => {
         try {
             const result = await getSecureApiData(
-                `get-all-users?page=${pageNumber}&search=${encodeURIComponent(searchQuery)}&type=${type}`
+                `transactions?page=${pageNumber}&search=${encodeURIComponent(searchQuery)}&type=${type}`
             );
 
-            if (result.status) {
-                setUserList(result.users || []);
-                setPage(result.currentPage);
-                setPages(result.totalPages);
-                setTotal(result.totalUsers);
+            if (result.success) {
+                setUserList(result.data || []);
+                setPage(result.pagination.page);
+                setPages(result.pagination.totalPages);
+                setTotal(result.pagination.totalTransactions);
             }
         } catch (error) {
             console.log("Error fetching users:", error);
@@ -60,28 +60,7 @@ const AllUsers = () => {
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
-    const handleDelete = (catId) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel!",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const res = await axios.delete(`${base_url}/api/users/delete/${catId}?deleteBy=admin`,);
-                    if (res.data.success) {
-                        toast.success(res.data.message);
-                        fetchUsers();
-                    }
-                } catch (error) {
-                    console.log("error delete users", error)
-                }
-            }
-        });
-    }
+   
     return (
         <>
             <PageHeader>
@@ -92,23 +71,24 @@ const AllUsers = () => {
                 <div className="container-fluid">
                     <div className="card">
                         <div className="card-header">
-                            <h5 className="mb-0">Users</h5>
+                            <h5 className="mb-0">Transactions</h5>
                             <div className='d-flex gap-5'>
                                 <select className='form-select' value={type} onChange={(e) => setType(e.target.value)}>
-                                    <option value="provider">Providers</option>
-                                    <option value="consumer">Users</option>
+                                    <option value="">All</option>
+                                    <option value="membership">MemberShip</option>
+                                    <option value="bespoke">Bespoke Service</option>
+                                    <option value="dispute">Dispute</option>
 
                                 </select>
                                 <input type='search' placeholder='search here...' value={search}
                                     onChange={handleSearchChange} />
-                                <CSVLink
+                                {/* <CSVLink
                                     data={userList}
-                                    // headers={headers}
                                     filename={"providers.csv"}
                                     className="btn btn-primary"
                                 >
                                     Export as CSV
-                                </CSVLink>
+                                </CSVLink> */}
                             </div>
                         </div>
                         <div className="card-body table-responsive">
@@ -116,10 +96,10 @@ const AllUsers = () => {
                                 <thead className="table-light">
                                     <tr>
                                         <th scope="col">S.No.</th>
-                                        <th scope="col">First name</th>
-                                        <th scope="col">Last name</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Contact Number</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Amount</th>
                                         <th scope="col" className="text-end">Actions</th>
                                     </tr>
                                 </thead>
@@ -130,14 +110,17 @@ const AllUsers = () => {
                                                 return (
                                                     <tr key={cat._id}>
                                                         <td>{(page - 1) * 10 + index + 1}</td>
-                                                        <td className='text-capitalize'>{cat?.firstName}</td>
-                                                        <td className=' text-capitalize'>{cat?.lastName}</td>
+                                                        <td className='text-capitalize'>{cat?.userId.firstName+' '+ cat?.userId?.lastName}</td>
                                                         <td>{cat?.email}</td>
-                                                        <td>{cat?.contactNumber}</td>
+                                                        <td className=' text-capitalize'>{cat?.type}</td>
+                                                        <td>{cat?.amount}</td>
                                                         <td className="text-end">
                                                             <div className="d-flex justify-content-end gap-2">
-                                                                <Link to={cat?.onBoarding ? `/user/view/${cat._id}` : cat.role == 'consumer' ? `/consumer/detail/${cat._id}` : `/user/detail/${cat._id}`} className="btn btn-sm btn-light"><FiEye /></Link>
-                                                                <button className="btn btn-sm btn-light text-danger" onClick={() => handleDelete(cat._id)}><FiTrash2 /></button>
+                                                                {/* <Link to={cat?.onBoarding ? `/user/view/${cat?.userId?._id}` : cat?.userId?.role == 'consumer' ? `/consumer/detail/${cat?.userId?._id}` : `/user/detail/${cat?.userId?._id}`} 
+                                                                className="btn btn-sm btn-light"><FiEye /></Link> */}
+                                                                <Link to={cat?.onBoarding ? `/user/view/${cat?.userId?._id}` : cat?.userId?.role == 'consumer' ? `/consumer/detail/${cat?.userId?._id}` : `/user/detail/${cat?.userId?._id}`} 
+                                                                className="btn btn-sm btn-light">View User</Link>
+                                                                {/* <button className="btn btn-sm btn-light text-danger" onClick={() => handleDelete(cat._id)}><FiTrash2 /></button> */}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -145,7 +128,7 @@ const AllUsers = () => {
                                             })
                                         ) : (
                                             <tr>
-                                                <td colSpan={6} className='text-center'>No users Found</td>
+                                                <td colSpan={6} className='text-center'>No transaction Found</td>
                                             </tr>
                                         )
                                     }
@@ -166,4 +149,4 @@ const AllUsers = () => {
     );
 };
 
-export default AllUsers;
+export default Transactions;

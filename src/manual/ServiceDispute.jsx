@@ -252,10 +252,10 @@ const ServiceDispute = () => {
                                     <thead className="table-light">
                                         <tr>
                                             <th scope="col">S.No.</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Subject</th>
-                                            <th scope="col">Service Type</th>
-                                            <th scope="col">Created At</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Service Dispute Id</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Against Type</th>
                                             <th scope="col">Status</th>
 
                                             <th scope="col" className="text-end">Actions</th>
@@ -268,10 +268,10 @@ const ServiceDispute = () => {
                                                     return (
                                                         <tr key={cat._id}>
                                                             <td>{(page - 1) * 10 + index + 1}</td>
-                                                            <td>{cat?.type}</td>
-                                                            <td>{cat?.subject}</td>
-                                                            <td>{cat?.addOnId?.name}</td>
                                                             <td>{new Date(cat?.createdAt)?.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
+                                                            <td>{cat?.customId || cat?._id?.slice(-6)}</td>
+                                                            <td>{cat?.userId?.firstName+' '+cat?.userId?.lastName}</td>
+                                                            <td>{cat?.against?.firstName+' '+cat?.against?.lastName}</td>
                                                             <td>{cat?.status}</td>
                                                             <td className="text-end">
                                                                 <div className="d-flex justify-content-end gap-2">
